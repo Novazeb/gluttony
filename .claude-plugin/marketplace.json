@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "gluttony",
+  "description": "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate, and minimizes cognitive load.",
+  "owner": {
+    "name": "Novazeb",
+    "url": "https://github.com/Novazeb"
+  },
+  "plugins": [
+    {
+      "name": "gluttony",
+      "description": "Forces lean code, zero AI fluff, direct answers, and low cognitive load.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
