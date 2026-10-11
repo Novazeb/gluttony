@@ -4,5 +4,5 @@
   "description": "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate, and minimizes cognitive load.",
   "author": "Novazeb",
   "homepage": "https://github.com/Novazeb/gluttony",
-  "entry": "./SKILL.md"
+  "entry": "./skills/gluttony/SKILL.md"
 }
