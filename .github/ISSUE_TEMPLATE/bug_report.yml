@@ -1,0 +1,21 @@
+name: Bug Report
+description: Report an issue with Gluttony rules or platform adapters
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for reporting an issue to [Novazeb/gluttony](https://github.com/Novazeb/gluttony)."
+  - type: input
+    id: environment
+    attributes:
+      label: AI Tool / IDE
+      description: What AI coding assistant or IDE are you using? (Cursor, Claude Code, Windsurf, etc.)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Describe what happened and what rule was not properly enforced.
+    validations:
+      required: true
