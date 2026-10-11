@@ -1,0 +1,28 @@
+{
+  "name": "gluttony",
+  "version": "1.0.0",
+  "description": "High-signal, lean code, zero AI fluff, and cognitive clarity engineering skill.",
+  "author": "Novazeb <https://github.com/Novazeb>",
+  "homepage": "https://github.com/Novazeb/gluttony#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Novazeb/gluttony.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Novazeb/gluttony/issues"
+  },
+  "scripts": {
+    "test": "node test/gluttony.test.js",
+    "verify": "node script/verify.js"
+  },
+  "keywords": [
+    "yagni",
+    "lean-code",
+    "clean-code",
+    "cognitive-load",
+    "productivity",
+    "web-accessibility",
+    "novazeb"
+  ],
+  "license": "MIT"
+}
