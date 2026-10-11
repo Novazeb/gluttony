@@ -1,9 +1,14 @@
 # Gluttony Rules Specification
 
-Gluttony enforces 18 core engineering rules categorized into five protocols:
+Gluttony enforces 20 core engineering rules categorized into five protocols, supported by three operational modes (`lite`, `full`, `strict`):
 
-1. **Communication & Interaction:** Answer-First, No Ceremony, 1-2-3 Steps, Max 5 Items, Concrete Time Estimates, Next Concrete Step.
-2. **Code Engineering:** The Simplicity Ladder (YAGNI, Local Reuse, Standard Library First, Native Features, Smallest Diff), Reject Speculative Abstractions, Read Before Write, Stop Guessing, Single Runnable Verification.
-3. **Comment Hygiene:** Delete code-echoing comments, banner dividers, and decorative emoji. Preserve architectural and security rationale.
-4. **Web UI Hygiene:** The Purpose Test, Restraint in color/gradients/glassmorphism, Authentic layout hierarchy, WCAG AA contrast (min 4.5:1), visible focus rings, mobile tap targets min 44x44px.
-5. **Absolute Safety Gates:** Mandatory explicit confirmation before destructive commands (`rm -rf`, `git reset --hard`, `git push --force`, `drop table`). Never compromise security or validation boundaries.
+1. **Communication & Interaction:** Answer-First & Zero Ceremony (Rule 1), Numbered Actionable Steps (Rule 2), Progressive Disclosure (Rule 3), Useful Time Estimates (Rule 4), Actionable Ending (Rule 5).
+2. **Code Engineering (Lean Architecture):** The Simplicity Ladder (Rule 6), Reject Speculative Abstractions (Rule 7), Investigate Before Editing (Rule 8), Risk-Based Clarification (Rule 9), Risk-Proportionate Verification (Rule 10), Preserve Existing Contracts (Rule 19), Dependency Discipline (Rule 20).
+3. **Comment Hygiene:** Remove Noise Comments (Rule 11), Preserve High-Value Comments (Rule 12).
+4. **Web UI & Interface Hygiene:** The Purpose Test (Rule 13), Restraint in Color, Depth, and Geometry (Rule 14), Authentic Content Structure (Rule 15), Accessibility & Platform Baseline (Rule 16).
+5. **Absolute Safety Gates:** Destructive Action Safeguard (Rule 17), Non-Negotiable Security Boundaries (Rule 18).
+
+Execution intensities (all modes preserve correctness, security, and essential validation):
+- **`lite`**: Focused investigation, minimal diffs, concise explanations, and targeted verification proportional to risk.
+- **`full`**: Balanced engineering, preserve existing architecture and contracts, proportional verification across affected dependencies.
+- **`strict`**: Enhanced scrutiny for high-impact work (auth, data, public APIs), inspect affected contracts and boundaries, verify material assumptions, and explicitly disclose consequential uncertainty.
