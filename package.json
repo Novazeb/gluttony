@@ -12,6 +12,7 @@
     "url": "https://github.com/Novazeb/gluttony/issues"
   },
   "scripts": {
+    "build": "node script/build.js",
     "test": "node test/gluttony.test.js",
     "verify": "node script/verify.js"
   },
