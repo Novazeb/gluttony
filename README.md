@@ -61,6 +61,28 @@ gluttony/
 
 ---
 
+## Quick Installation (No Clone Required)
+
+Install Gluttony directly into your AI environment via marketplace commands:
+
+### Claude Code
+```bash
+/plugin marketplace add Novazeb/gluttony
+/plugin install gluttony@gluttony
+```
+
+### OpenAI Codex
+```bash
+codex plugin add Novazeb/gluttony
+```
+
+### Antigravity & Gemini CLI
+```bash
+antigravity plugin install https://github.com/Novazeb/gluttony
+```
+
+---
+
 ## Usage
 
 ### 1. On-Demand Activation
