@@ -1,0 +1,21 @@
+name: Feature Request
+description: Propose a new platform adapter or rule refinement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Propose an enhancement for [Novazeb/gluttony](https://github.com/Novazeb/gluttony)."
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What challenge or platform gap are you encountering?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: What is the leanest, smallest solution that addresses this?
+    validations:
+      required: true
