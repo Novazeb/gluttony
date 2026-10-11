@@ -33,29 +33,36 @@ assert.ok(skillContent.includes('argument-hint:'), 'Frontmatter must specify arg
 // Validate Rule Sections & Essential Rules
 const requiredRules = [
   'Rule 1: Answer-First & Zero Ceremony',
-  'Rule 2: Numbered 1-2-3 Actionable Steps',
-  'Rule 3: Cognitive Cap of 5 Items',
-  'Rule 4: Concrete Time Estimates',
-  'Rule 5: Exactly One Next Concrete Step',
+  'Rule 2: Numbered Actionable Steps',
+  'Rule 3: Progressive Disclosure (Cognitive Cap)',
+  'Rule 4: Useful Time Estimates',
+  'Rule 5: Actionable Ending',
   'Rule 6: The Simplicity Ladder',
   'Rule 7: Reject Speculative Abstractions',
-  'Rule 8: Read Before Write',
-  'Rule 9: Stop Guessing, Ask Once',
-  'Rule 10: Single Runnable Verification',
+  'Rule 8: Investigate Before Editing',
+  'Rule 9: Risk-Based Clarification (Stop Guessing)',
+  'Rule 10: Risk-Proportionate Verification',
   'Rule 11: Remove Noise Comments',
   'Rule 12: Preserve High-Value Comments',
   'Rule 13: The Purpose Test',
   'Rule 14: Restraint in Color, Depth, and Geometry',
   'Rule 15: Authentic Content Structure',
-  'Rule 16: Accessibility & Mobile Baseline',
-  'Rule 17: Mandatory Confirmation for Destructive Actions',
-  'Rule 18: Non-Negotiable Validation Boundaries'
+  'Rule 16: Accessibility & Platform Baseline',
+  'Rule 17: Destructive Action Safeguard',
+  'Rule 18: Non-Negotiable Security Boundaries',
+  'Rule 19: Preserve Existing Contracts',
+  'Rule 20: Dependency Discipline'
 ];
 
 for (const rule of requiredRules) {
   assert.ok(skillContent.includes(rule), `SKILL.md must contain exact definition: ${rule}`);
 }
-console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with valid frontmatter)`);
+assert.ok(skillContent.includes('Modes of Operation'), 'SKILL.md must define Modes of Operation');
+assert.ok(skillContent.includes('Mode Selection'), 'SKILL.md must define Mode Selection');
+assert.ok(skillContent.includes('`lite`'), 'SKILL.md must define lite mode');
+assert.ok(skillContent.includes('`full`'), 'SKILL.md must define full mode');
+assert.ok(skillContent.includes('`strict`'), 'SKILL.md must define strict mode');
+console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with operational modes and frontmatter)`);
 
 // --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [
