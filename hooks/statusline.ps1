@@ -1,6 +1,10 @@
 # Gluttony Statusline Hook (Novazeb)
-# Output: [gluttony] when active in directory
+# Output: [gluttony] when active in directory with verified Gluttony configuration
 
-if ((Test-Path ".clinerules") -or (Test-Path "AGENTS.md") -or (Test-Path "CLAUDE.md") -or (Test-Path "GEMINI.md")) {
-  Write-Host "[gluttony] " -ForegroundColor Cyan -NoNewline
+$candidates = @(".clinerules", "AGENTS.md", "CLAUDE.md", "GEMINI.md", ".cursor/rules/gluttony.mdc", ".windsurf/rules/gluttony.md")
+foreach ($file in $candidates) {
+  if ((Test-Path $file) -and (Select-String -Path $file -Pattern "gluttony" -Quiet -ErrorAction SilentlyContinue)) {
+    Write-Host "[gluttony] " -ForegroundColor Cyan -NoNewline
+    break
+  }
 }
