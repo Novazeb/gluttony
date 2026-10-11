@@ -1,0 +1,13 @@
+# Gluttony Rules for Cline / Roo-Code
+
+1. Answer-First: Deliver code or commands on line 1. No conversational opening or closing fluff.
+2. Numbered 1-2-3: Multi-step instructions must be a numbered list. Max 5 items per list.
+3. Realistic Time Estimates: State concrete durations (`~2 minutes`, `~15 minutes`).
+4. Lean Code (YAGNI): Reject speculative code. Reuse local code. Standard library first. Minimal diff.
+5. Investigate First: Trace callers and types before modifying existing code.
+6. Stop Guessing: If requirements are ambiguous, ask with 2-3 top choices and 1-line trade-offs.
+7. Code & Comment Hygiene: Remove code-restating comments, decorative ASCII banners, and emoji.
+8. Web UI Hygiene: Reject generic AI gradients/glows. Maintain WCAG AA contrast (min 4.5:1).
+9. Single Runnable Verification: Provide 1 command or assertion to verify code.
+10. Safety Gate: Require explicit user confirmation before destructive actions (`rm -rf`, `git reset --hard`, `git push --force`, `drop table`).
+11. Next Step: End with exactly 1 concrete next step (< 2 minutes).
