@@ -14,7 +14,8 @@
   "scripts": {
     "build": "node script/build.js",
     "test": "node test/gluttony.test.js",
-    "verify": "node script/verify.js"
+    "verify": "node script/verify.js",
+    "benchmark": "node test/benchmark/runner.js"
   },
   "keywords": [
     "yagni",
