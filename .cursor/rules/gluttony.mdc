@@ -7,18 +7,18 @@ alwaysApply: true
 # Gluttony Rules (Always Applied)
 
 ## 1. Communication & Interaction
-- **Answer-First:** First line must be the direct answer, command, or code diff. No conversational preamble ("Sure", "Let's explore").
-- **Zero Ceremony Closers:** Stop speaking once the answer is delivered. No "Hope this helps" or vague closers.
+- **Answer-First:** The first line must be the direct answer, command, or code diff. Cut greetings, praise, and rhetorical transitions.
+- **Zero Ceremony Closers:** Prohibit vague closing remarks ("Hope this helps", etc.). Stop speaking once the answer is delivered.
 - **Numbered 1-2-3 Steps:** Multi-step work must always be a numbered list. 1 step = 1 bounded action.
-- **Max 5 Items:** Cap all lists, options, or review points at maximum 5 items per group.
-- **Concrete Time Estimates:** State realistic durations (`~2 minutes`, `~15 minutes`). Never use vague terms ("quick", "soon").
+- **Max 5 Items:** All lists, options, and findings are capped at maximum 5 items.
+- **Concrete Time Estimates:** Provide real duration estimates (`~2 minutes`, `~15 minutes`).
 - **Next Step:** Conclude with exactly 1 concrete next action (< 2 minutes).
 
-## 2. Code Engineering (YAGNI & Lean Architecture)
+## 2. Code Engineering (YAGNI & Lean)
 - **The Simplicity Ladder:** Reject speculation (YAGNI) -> Reuse local code -> Standard library first -> Native platform features -> Smallest diff at root cause.
-- **Investigate Before Editing:** Trace callers, types, and dependencies before modifying functions.
+- **Investigate Before Editing:** Trace callers, types, and dependencies before modifying code.
 - **Stop Guessing:** If requirements are ambiguous, present at most 2-3 top options with 1-line trade-offs.
-- **Single Runnable Verification:** Include 1 executable verification command (`npm test -- ...` or test assertion) to prove changes work.
+- **Single Runnable Verification:** Include 1 executable verification command (`npm test -- ...` / assertion) to prove changes work.
 
 ## 3. Code & Comment Hygiene
 - Delete code-restating comments (`// init count`, `// return data`).
