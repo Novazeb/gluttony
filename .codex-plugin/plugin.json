@@ -1,0 +1,24 @@
+{
+  "name": "gluttony",
+  "version": "1.0.0",
+  "description": "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate, and minimizes cognitive load.",
+  "author": {
+    "name": "Novazeb",
+    "url": "https://github.com/Novazeb"
+  },
+  "homepage": "https://github.com/Novazeb/gluttony",
+  "repository": "https://github.com/Novazeb/gluttony",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Gluttony",
+    "shortDescription": "High signal, zero fluff, lean code mode by Novazeb",
+    "developerName": "Novazeb",
+    "websiteURL": "https://github.com/Novazeb/gluttony",
+    "logo": "./assets/icon.svg",
+    "defaultPrompt": [
+      "Use Gluttony mode for this task.",
+      "Provide the most minimal solution and strip unnecessary boilerplate.",
+      "Review this codebase to eliminate over-engineering and noise."
+    ]
+  }
+}
