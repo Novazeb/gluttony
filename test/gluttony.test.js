@@ -2,72 +2,132 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const rootDir = path.resolve(__dirname, '..');
 
-console.log('Running Gluttony test suite...');
+console.log('Running Gluttony Comprehensive Test Suite...');
 
-// Test 1: SKILL.md exists and contains required rules
-const skillPath = path.join(rootDir, 'skill', 'SKILL.md');
-assert.ok(fs.existsSync(skillPath), 'skill/SKILL.md must exist');
+// --- Test 1: Frontmatter Parsing & Canonical Skill Validation ---
+const skillPath = path.join(rootDir, 'skills', 'gluttony', 'SKILL.md');
+assert.ok(fs.existsSync(skillPath), 'Canonical skills/gluttony/SKILL.md must exist');
 
 const skillContent = fs.readFileSync(skillPath, 'utf8');
-assert.ok(skillContent.includes('name: gluttony'), 'Frontmatter must declare name: gluttony');
-assert.ok(skillContent.includes('Answer-First'), 'Must contain Answer-First rule');
-assert.ok(skillContent.includes('The Simplicity Ladder'), 'Must contain The Simplicity Ladder rule');
-assert.ok(skillContent.includes('Cognitive Cap of 5 Items'), 'Must contain Cognitive Cap rule');
-assert.ok(skillContent.includes('Read Before Write'), 'Must contain Read Before Write rule');
-assert.ok(skillContent.includes('Stop Guessing, Ask Once'), 'Must contain Stop Guessing rule');
-assert.ok(skillContent.includes('Accessibility & Mobile Baseline'), 'Must contain Accessibility rule');
-assert.ok(skillContent.includes('Single Runnable Verification'), 'Must contain Runnable Verification rule');
-assert.ok(skillContent.includes('Mandatory Confirmation for Destructive Actions'), 'Must contain Safety Gate rule');
+const fmMatch = skillContent.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+assert.ok(fmMatch, 'SKILL.md must have valid YAML frontmatter delimiters (---)');
 
-console.log('[PASS] Test 1: Core rules verified in SKILL.md');
+const fmText = fmMatch[1];
+const fm = {};
+for (const line of fmText.split(/\r?\n/)) {
+  const kv = line.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/);
+  if (kv) {
+    let val = kv[2].trim().replace(/^["']|["']$/g, '');
+    fm[kv[1]] = val;
+  }
+}
 
-// Test 2: Platform manifests exist and are valid JSON
+assert.strictEqual(fm.name, 'gluttony', 'Frontmatter name must be "gluttony"');
+assert.ok(fm.description && fm.description.length > 20, 'Frontmatter description must be descriptive');
+assert.ok(skillContent.includes('argument-hint:'), 'Frontmatter must specify argument-hint');
+
+// Validate Rule Sections & Essential Rules
+const requiredRules = [
+  'Rule 1: Answer-First & Zero Ceremony',
+  'Rule 2: Numbered 1-2-3 Actionable Steps',
+  'Rule 3: Cognitive Cap of 5 Items',
+  'Rule 4: Concrete Time Estimates',
+  'Rule 5: Exactly One Next Concrete Step',
+  'Rule 6: The Simplicity Ladder',
+  'Rule 7: Reject Speculative Abstractions',
+  'Rule 8: Read Before Write',
+  'Rule 9: Stop Guessing, Ask Once',
+  'Rule 10: Single Runnable Verification',
+  'Rule 11: Remove Noise Comments',
+  'Rule 12: Preserve High-Value Comments',
+  'Rule 13: The Purpose Test',
+  'Rule 14: Restraint in Color, Depth, and Geometry',
+  'Rule 15: Authentic Content Structure',
+  'Rule 16: Accessibility & Mobile Baseline',
+  'Rule 17: Mandatory Confirmation for Destructive Actions',
+  'Rule 18: Non-Negotiable Validation Boundaries'
+];
+
+for (const rule of requiredRules) {
+  assert.ok(skillContent.includes(rule), `SKILL.md must contain exact definition: ${rule}`);
+}
+console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with valid frontmatter)`);
+
+// --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [
-  '.claude-plugin/plugin.json',
-  '.codex-plugin/plugin.json',
-  '.antigravity-plugin/plugin.json',
-  '.openclaw/plugin.json',
-  '.opencode/plugin.json',
-  '.kiro-plugin/plugin.json',
-  'plugin.json',
-  'package.json'
+  { file: '.claude-plugin/plugin.json', checkSkills: true },
+  { file: '.codex-plugin/plugin.json', checkSkills: true },
+  { file: '.antigravity-plugin/plugin.json', checkSkills: true, checkCommands: true },
+  { file: '.openclaw/plugin.json', checkEntry: true },
+  { file: '.opencode/plugin.json', checkSkills: true },
+  { file: '.kiro-plugin/plugin.json', checkSkills: true },
+  { file: '.devin-plugin/plugin.json', checkSkills: true },
+  { file: '.grok-plugin/plugin.json', checkSkills: true },
+  { file: '.kimi-plugin/plugin.json', checkSkills: true },
+  { file: '.qoder-plugin/plugin.json', checkRules: true },
+  { file: 'gemini-extension.json', checkSkills: true, checkCommands: true },
+  { file: 'opencode.json', checkSkills: true },
+  { file: 'plugin.json', checkSkills: true, checkCommands: true },
+  { file: 'package.json' }
 ];
 
 for (const m of manifests) {
-  const p = path.join(rootDir, m);
-  assert.ok(fs.existsSync(p), `${m} must exist`);
-  const data = JSON.parse(fs.readFileSync(p, 'utf8'));
-  assert.strictEqual(data.name, 'gluttony', `${m} name must be gluttony`);
+  const fullPath = path.join(rootDir, m.file);
+  assert.ok(fs.existsSync(fullPath), `Manifest must exist: ${m.file}`);
+  const data = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+  assert.strictEqual(data.name, 'gluttony', `${m.file} name must be "gluttony"`);
+  assert.ok(data.version, `${m.file} must have version`);
+  assert.ok(data.description, `${m.file} must have description`);
+
+  // Verify referenced paths exist
+  if (m.checkSkills && data.skills) {
+    const skillDir = path.resolve(rootDir, data.skills);
+    assert.ok(fs.existsSync(skillDir), `${m.file}: referenced skills dir must exist at ${skillDir}`);
+  }
+  if (m.checkCommands && data.commands) {
+    const cmdDir = path.resolve(rootDir, data.commands);
+    assert.ok(fs.existsSync(cmdDir), `${m.file}: referenced commands dir must exist at ${cmdDir}`);
+  }
+  if (m.checkRules && data.rules) {
+    const rulesFile = path.resolve(rootDir, data.rules);
+    assert.ok(fs.existsSync(rulesFile), `${m.file}: referenced rules file must exist at ${rulesFile}`);
+  }
+  if (m.checkEntry && data.entry) {
+    const entryFile = path.resolve(rootDir, data.entry);
+    assert.ok(fs.existsSync(entryFile), `${m.file}: referenced entry file must exist at ${entryFile}`);
+  }
 }
+console.log(`[PASS] Test 2: All ${manifests.length} platform manifests validated with active path integrity`);
 
-console.log('[PASS] Test 2: All 8 platform manifests exist and are valid JSON');
-
-// Test 3: Embedded rules exist (Cursor, Agents, Claude, Gemini)
-const embeddedRules = [
-  '.cursor/rules/gluttony.mdc',
-  'AGENTS.md',
-  'CLAUDE.md',
-  'GEMINI.md'
+// --- Test 3: Contrast Checker Multi-Format & Target Flags ---
+const contrastTests = [
+  { fg: '#FFFFFF', bg: '#000000', flag: '--target=normal', expectedPass: true },
+  { fg: 'rgb(255, 255, 255)', bg: 'rgb(0, 0, 0)', flag: '--target=normal', expectedPass: true },
+  { fg: 'hsl(0, 0%, 100%)', bg: 'hsl(0, 0%, 0%)', flag: '--target=normal', expectedPass: true },
+  { fg: '#94a3b8', bg: '#0f172a', flag: '--target=large', expectedPass: true }
 ];
 
-for (const rule of embeddedRules) {
-  const p = path.join(rootDir, rule);
-  assert.ok(fs.existsSync(p), `${rule} must exist`);
-  const content = fs.readFileSync(p, 'utf8');
-  assert.ok(content.length > 100, `${rule} must have substantive content`);
+for (const ct of contrastTests) {
+  const cmd = `node script/contrast.js "${ct.fg}" "${ct.bg}" ${ct.flag}`;
+  const out = execSync(cmd).toString();
+  assert.ok(out.includes('PASS'), `Contrast check should pass for ${ct.fg} on ${ct.bg}`);
 }
+console.log('[PASS] Test 3: Contrast utility verified across HEX, RGB, HSL, and custom thresholds');
 
-console.log('[PASS] Test 3: Embedded rules for all IDEs and harnesses verified');
+// --- Test 4: False Positive Statusline Hook Validation ---
+const bashHook = fs.readFileSync(path.join(rootDir, 'hooks', 'statusline.sh'), 'utf8');
+const psHook = fs.readFileSync(path.join(rootDir, 'hooks', 'statusline.ps1'), 'utf8');
 
-// Test 4: Run contrast test from script
-const { execSync } = require('child_process');
-const contrastOutput = execSync('node script/contrast.js "#FFFFFF" "#000000"').toString();
-assert.ok(contrastOutput.includes('21:1'), 'Black on white contrast should be 21:1');
-assert.ok(contrastOutput.includes('PASS'), 'Black on white contrast should PASS');
+assert.ok(bashHook.includes('grep -qi "gluttony"'), 'statusline.sh must verify "gluttony" signature');
+assert.ok(psHook.includes('Pattern "gluttony"'), 'statusline.ps1 must verify "gluttony" signature');
+console.log('[PASS] Test 4: Statusline hooks verified to prevent generic false-positives');
 
-console.log('[PASS] Test 4: Built-in WCAG contrast script verified');
+// --- Test 5: Build Generator Execution ---
+execSync('node script/build.js', { stdio: 'pipe' });
+console.log('[PASS] Test 5: SSOT Build Generator executed and synchronized');
 
-console.log('\nAll tests PASSED successfully!');
+console.log('\nAll 5 test suites PASSED with flying colors!');

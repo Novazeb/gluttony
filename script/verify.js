@@ -5,7 +5,6 @@ const path = require('path');
 const rootDir = path.resolve(__dirname, '..');
 
 const requiredFiles = [
-  'skill/SKILL.md',
   'skills/gluttony/SKILL.md',
   '.claude-plugin/plugin.json',
   '.codex-plugin/plugin.json',
