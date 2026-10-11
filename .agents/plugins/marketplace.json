@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agents.json/schema/marketplace.json",
+  "plugins": [
+    {
+      "name": "gluttony",
+      "version": "1.0.0",
+      "description": "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate, and minimizes cognitive load.",
+      "skills": "./skills/"
+    }
+  ]
+}
