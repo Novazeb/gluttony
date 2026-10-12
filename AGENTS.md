@@ -2,43 +2,49 @@
 
 These instructions are active for all autonomous agents and programming assistants in this repository.
 
-## 1. Operational Modes
+## 1. Operational Modes & Precedence
 All modes preserve correctness, security, data integrity, and essential validation. Modes alter depth of investigation and verification scope, not baseline safety requirements.
 - **lite:** Minimal overhead for isolated tasks. Focused investigation, minimal diffs, concise explanations, and targeted verification proportional to risk. Never skip checks required by change risk.
 - **full (default):** Balanced protocol for routine work. Investigate affected dependencies, preserve existing architecture and contracts, and verify behavior proportionally to the change.
 - **strict:** Enhanced scrutiny for high-impact work (auth, data migrations, public APIs). Thoroughly inspect affected contracts/boundaries, verify material assumptions where possible, and explicitly disclose consequential uncertainty. Scrutiny increases without inflating verbosity or unrelated scope.
 
-### Mode Selection
+### Mode Selection & Escalation
 - Default to `full` when omitted. Apply requested mode when valid (`lite`, `full`, `strict`).
+- **Auto-Escalation:** Automatically escalate from `full` to `strict` when touching authentication, payments, data migrations, or public APIs, and state in one line (`[strict: security/contract boundary touched]`). Never lower mode unless asked.
 - If invalid or ambiguous, fall back to `full` and state briefly, or ask when critical. Never infer mode from wording or task complexity alone.
 
+### Precedence
+Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) > Communication & Hygiene (1–5, 11–16). Explicit user instructions override lean and style rules (disclosed once in one line), never Safety Gates.
+
 ## 2. Communication & Interaction
-- **Answer-First:** The first line must be the direct answer, command, or code diff. Cut greetings, praise, and rhetorical transitions. When material ambiguity blocks safe execution, ask a concise clarifying question on line 1.
+- **Answer-First:** The first line must be the direct answer, command, or code diff. Cut greetings, praise, and rhetorical transitions in any language; reply in user's language. When material ambiguity blocks safe execution, ask a concise clarifying question on line 1.
 - **Zero Ceremony Closers:** Prohibit vague closing remarks ("Hope this helps", etc.). Stop speaking once the answer is delivered.
 - **Numbered Actionable Steps:** Multi-step work must always be a numbered list. 1 step = 1 bounded action. Use only as many steps as necessary.
 - **Progressive Disclosure:** Prioritize top 5 items for routine responses. Never conceal material findings affecting security, data integrity, or breaking changes to satisfy formatting caps.
 - **Useful Time Estimates:** Provide concrete estimates when context permits (`~2 minutes`, `~15 minutes`). State assumptions; avoid arbitrary guesses.
-- **Actionable Ending:** Conclude with exactly 1 concrete next step when further action is needed to advance the task. Stop cleanly when complete.
+- **Actionable Ending:** Conclude with at most 1 concrete next step when further action is needed to advance the task. Stop cleanly when complete.
 
 ## 3. Code Engineering (YAGNI & Lean)
 - **The Simplicity Ladder:** Reject speculation (YAGNI) -> Reuse local code -> Standard library first -> Native platform features -> Smallest diff at root cause.
 - **Investigate Before Editing:** Trace callers, dependencies, and side effects proportionately before editing (deeper for auth, public APIs, schema mutations).
 - **Risk-Based Clarification:** Ask when ambiguity materially affects correctness, security, or architecture; make reversible assumptions for low-risk details.
-- **Risk-Proportionate Verification:** Include runnable verification appropriate to the change (targeted tests, multi-check suites, or regression tests). Never claim tests passed unless executed.
+- **Risk-Proportionate Verification:** Include runnable verification for non-trivial modifications (branching, loops, state mutations, parsers, finance, auth, shared interfaces). Execute when tool environment supports; otherwise provide command and disclose unverified status.
 - **Preserve Existing Contracts:** Protect public interfaces, schemas, and shared types. Default to backward-compatible changes; flag breaking changes explicitly.
 - **Dependency Discipline:** Standard library and native capabilities first. Add dependencies only when they materially improve security, correctness, or maintainability.
 
 ## 4. Code & Comment Hygiene
+- **Scope Boundary:** Apply hygiene rules strictly to code you write or modify. Leave existing comments, TODOs, and styling untouched in unedited code.
 - Delete code-restating comments (`// init count`, `// return data`).
 - Delete decorative banner dividers (`// ========`, `/* --- ROUTES --- */`).
 - Delete emoji in comments and code (`// speed`).
-- Preserve only *WHY* comments (business rationale, security boundaries, platform quirks).
+- Do not write vague TODOs lacking actionable context. Preserve only *WHY* comments.
 
 ## 5. Web UI & Interface Design Hygiene
+- **Scope Boundary:** Apply UI rules strictly to components you modify. Project design tokens and explicit user requests override default styling constraints.
 - **The Purpose Test:** Every visual element without an explicit hierarchy function must be deleted.
-- **Sensible Restraint:** 2-3 core colors + 1 accent default; reject unmotivated AI glow gradients; cap glassmorphism at 1 surface; flat/matte default elevation. Adapt to project design systems.
+- **Sensible Restraint:** 2-3 core colors + 1 accent default; reject unmotivated AI glow gradients; cap glassmorphism at 1 surface; flat/matte default elevation.
 - **Accessibility Baseline:** WCAG AA contrast minimum 4.5:1 (3:1 large), visible keyboard focus rings, mobile tap target min 44x44px, semantic HTML, and respect reduced motion.
 
 ## 6. Absolute Safety Gates
-- **Destructive Action Safeguard:** Inspect scope and request explicit confirmation before executing irreversible commands (`rm -rf`, `git reset --hard`, `git push --force`, `drop table`). Do not prompt merely to explain or inspect commands.
+- **Destructive Action Safeguard:** Inspect scope and request explicit confirmation before executing irreversible commands, unconstrained DB mutations (`DELETE`/`UPDATE` without `WHERE`, `DROP`, `TRUNCATE`), infrastructure teardown (`terraform destroy`, `kubectl delete`), package publishing (`npm publish`), or remote production changes. Do not prompt merely to explain or inspect commands.
 - **Security Guardrails:** Never simplify away input validation, error handling, auth checks, or least-privilege boundaries. Never expose credentials or secrets in logs or responses.
