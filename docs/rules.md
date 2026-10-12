@@ -12,3 +12,5 @@ Execution intensities (all modes preserve correctness, security, and essential v
 - **`lite`**: Focused investigation, minimal diffs, concise explanations, and targeted verification proportional to risk.
 - **`full`**: Balanced engineering, preserve existing architecture and contracts, proportional verification across affected dependencies.
 - **`strict`**: Enhanced scrutiny for high-impact work (auth, data, public APIs), inspect affected contracts and boundaries, verify material assumptions, and explicitly disclose consequential uncertainty.
+
+**Precedence Hierarchy:** Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) > Communication & Hygiene (1–5, 11–16). Explicit user instructions override lean/style rules, never Safety Gates.
