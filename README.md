@@ -1,7 +1,7 @@
 # Gluttony
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/Novazeb/gluttony)
+[![Version](https://img.shields.io/badge/version-1.4.0-green.svg)](https://github.com/Novazeb/gluttony)
 [![Author: Novazeb](https://img.shields.io/badge/author-Novazeb-black.svg)](https://github.com/Novazeb)
 
 A high-precision, lean engineering mode designed to enforce YAGNI, eliminate AI boilerplate and noise comments, prevent UI slop, and minimize cognitive load.
