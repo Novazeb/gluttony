@@ -59,10 +59,13 @@ for (const rule of requiredRules) {
 }
 assert.ok(skillContent.includes('Modes of Operation'), 'SKILL.md must define Modes of Operation');
 assert.ok(skillContent.includes('Mode Selection'), 'SKILL.md must define Mode Selection');
+assert.ok(skillContent.includes('Auto-Escalation'), 'SKILL.md must define Auto-Escalation');
+assert.ok(skillContent.includes('## Precedence'), 'SKILL.md must define Precedence section');
+assert.ok(skillContent.includes('Scope Boundary'), 'SKILL.md must define Scope Boundary');
 assert.ok(skillContent.includes('`lite`'), 'SKILL.md must define lite mode');
 assert.ok(skillContent.includes('`full`'), 'SKILL.md must define full mode');
 assert.ok(skillContent.includes('`strict`'), 'SKILL.md must define strict mode');
-console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with operational modes and frontmatter)`);
+console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with precedence, boundaries, and modes)`);
 
 // --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [
