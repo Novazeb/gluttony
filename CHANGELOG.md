@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Multi-Language Support & Step Flexibility:** Universal zero-ceremony enforcement in any language and flexible step limits.
 
 ### Changed
+- **Modular UI Decoupling (gluttony-ui):** Separated frontend & accessibility rules into dedicated `skills/gluttony-ui` skill and `/gluttony-ui` slash command, keeping core `gluttony` focused purely on lean software engineering.
 - Refactored Rule 10 into *Risk-Proportionate Verification* with explicit definition of non-trivial code modifications.
 - Refactored Rule 5 into *Actionable Ending* with at most one next action.
 - Refactored Rule 3 into *Progressive Disclosure* with safety overrides.
