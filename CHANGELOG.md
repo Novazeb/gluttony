@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-10-13
+
+### Changed
+- **High-Density Directive Compression:** Refactored canonical `skills/gluttony/SKILL.md` from ~3.600 tokens down to ~1.835 tokens (-49% prompt weight) while preserving all 16 core rules, modes, and safety gates intact.
+- **Pure UI Delegation:** Streamlined `coreSummary` across all 11 platform adapters to delegate UI, WCAG AA contrast, and layout completely to `gluttony-ui`.
+- **Adaptive Step Guidance:** Updated Rule 2 to explicitly designate step lists as illustrative examples rather than fixed schema templates.
+- **Enhanced Statusline & Commands:** Extended PowerShell and Bash statusline hooks to track modular skill paths; updated `/gluttony` slash command prompt with mode argument support ($ARGUMENTS).
+
 ## [1.4.0] - 2026-10-12
 
 ### Added
