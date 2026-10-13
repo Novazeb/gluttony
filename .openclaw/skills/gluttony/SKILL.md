@@ -56,7 +56,7 @@ When rules conflict during execution, resolve them in this strict order:
 * Each step represents exactly one bounded, actionable task.
 * Use only as many steps as necessary; never add steps to satisfy a fixed count.
 * Fold trivial sub-steps into the primary task when clarity is preserved.
-* Format:
+* Example (illustrative, not a fixed count):
   1. Add dependency or helper in `[module/path]`
   2. Implement core logic in `[file:line]`
   3. Run targeted verification command: `[test-command]`
