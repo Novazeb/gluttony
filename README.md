@@ -79,12 +79,12 @@ gluttony/
 ├── .qoder/ & .qoder-plugin/    # Qoder rules & manifest
 ├── .windsurf/rules/            # Windsurf IDE rules
 ├── assets/                     # Icons and visual branding
-├── commands/                   # /gluttony slash command
+├── commands/                   # /gluttony & /gluttony-ui slash commands
 ├── docs/                       # Architecture, rules, and migration guides
 ├── examples/                   # Clean code references
 ├── hooks/                      # Terminal statusline indicators
 ├── script/                     # build.js, contrast.js & verify.js
-├── skills/                     # Canonical SKILL.md definition
+├── skills/                     # Canonical SKILL.md definitions (gluttony & gluttony-ui)
 ├── test/                       # Automated test suite & benchmark runner
 │   └── benchmark/              # Comparative benchmark harness
 ├── .clinerules                 # Cline / Roo-Code rules
@@ -125,7 +125,8 @@ antigravity plugin install https://github.com/Novazeb/gluttony
 ## Usage
 
 ### 1. On-Demand Activation
-* **Slash Command:** Type `/gluttony [lite|full|strict]` in your agent's chat interface.
+* **Core Engineering:** Type `/gluttony [lite|full|strict]` in your agent's chat interface.
+* **UI & Accessibility:** Type `/gluttony-ui` when designing or building frontends, layouts, or verifying WCAG AA contrast.
 * **Direct Instruction:**
   ```
   Use Gluttony mode for this development task.
