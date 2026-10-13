@@ -80,6 +80,12 @@ for (const rule of requiredUiRules) {
   assert.ok(uiSkillContent.includes(rule), `gluttony-ui SKILL.md must contain definition: ${rule}`);
 }
 
+const coreCmdPath = path.join(rootDir, 'commands', 'gluttony.toml');
+assert.ok(fs.existsSync(coreCmdPath), 'commands/gluttony.toml must exist');
+const coreCmdContent = fs.readFileSync(coreCmdPath, 'utf8');
+assert.ok(!coreCmdContent.includes('1-2-3 actionable steps'), 'commands/gluttony.toml must not constrain steps to 1-2-3');
+assert.ok(!coreCmdContent.includes('monotonous AI template designs'), 'commands/gluttony.toml must not contain legacy UI constraints');
+
 const uiCmdPath = path.join(rootDir, 'commands', 'gluttony-ui.toml');
 assert.ok(fs.existsSync(uiCmdPath), 'commands/gluttony-ui.toml must exist');
 
