@@ -41,7 +41,9 @@ export async function fetchData<T>(url: string): Promise<T> {
 
 ---
 
-## 2. Web UI (Lean Design Restraint)
+## 2. Web UI (Gluttony UI Specialization: `/gluttony-ui`)
+
+*Note: UI design and accessibility constraints are specialized under the dedicated `gluttony-ui` skill.*
 
 ### Bad (Generic AI Aesthetic):
 * Blue-to-purple background gradient with blurry glow orbs.
