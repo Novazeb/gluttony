@@ -1,10 +1,10 @@
 ---
 name: gluttony
-description: "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate and comment noise, prevents UI slop, and minimizes cognitive load with direct, actionable execution. Use on any coding task (writing, fixing, refactoring, reviewing) or when prompted for lean/minimal engineering."
+description: "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate and comment noise, prevents bloated abstractions, and minimizes cognitive load with direct, actionable execution. Use on any coding task (writing, fixing, refactoring, reviewing) or when prompted for lean/minimal engineering."
 argument-hint: "[lite|full|strict]"
 metadata:
   category: "engineering"
-  tags: ["lean-code", "clean-architecture", "yagni", "focus", "clean-ui"]
+  tags: ["lean-code", "clean-architecture", "yagni", "focus", "simplicity"]
 ---
 
 # Gluttony
@@ -33,10 +33,10 @@ Gluttony supports three execution intensities via `[lite|full|strict]`. All mode
 ## Precedence
 
 When rules conflict during execution, resolve them in this strict order:
-1. **Safety Gates (Rules 17, 18):** Unconditional. Explicit confirmation for destructive actions and security boundary preservation always take highest priority.
-2. **Correctness & Contracts (Rules 10, 19):** Functional correctness, verification, and API/schema contracts overrule lean minimization.
-3. **Lean Engineering (Rules 6, 7, 20):** YAGNI and platform-native preferences overrule speculative abstractions.
-4. **Communication & Hygiene (Rules 1–5, 11–16):** Formatting, concise presentation, and comment/UI hygiene.
+1. **Safety Gates (Rules 15, 16):** Unconditional. Explicit confirmation for destructive actions and security boundary preservation always take highest priority.
+2. **Correctness & Contracts (Rules 10, 11):** Functional correctness, verification, and API/schema contracts overrule lean minimization.
+3. **Lean Engineering (Rules 6, 7, 12):** YAGNI and platform-native preferences overrule speculative abstractions.
+4. **Communication & Hygiene (Rules 1–5, 13–14):** Formatting, concise presentation, and comment hygiene.
 
 *Note:* An explicit user instruction overrides lean and styling rules (disclose the departure once in one concise line), but **never overrides Safety Gates**.
 
@@ -113,13 +113,13 @@ Evaluate every code implementation through this priority sequence:
 * Run additional regression checks when the change affects security, data integrity, public APIs, or cross-module behavior.
 * **Execution & Transparency:** If the environment supports tool execution, run the verification command and observe the result. If automated execution is not supported or restricted, provide the exact runnable command and explicitly state what remains unverified and why. Never claim a test passed unless it was actually executed.
 
-### Rule 19: Preserve Existing Contracts
+### Rule 11: Preserve Existing Contracts
 * Preserve established behavior, API responses, schemas, and shared types unless the task explicitly requires changing them.
 * Check affected callers and consumers before modifying public interfaces or shared contracts.
 * Prefer backward-compatible changes when feasible; explicitly identify breaking changes and migration steps.
 * Do not alter unrelated behavior merely to simplify the implementation.
 
-### Rule 20: Dependency Discipline
+### Rule 12: Dependency Discipline
 * Prefer existing project utilities and platform capabilities when they fully satisfy requirements.
 * Reuse installed dependencies when appropriate.
 * Introduce a dependency only when it materially improves correctness, security, maintainability, or required functionality.
@@ -131,13 +131,13 @@ Evaluate every code implementation through this priority sequence:
 
 **Scope Boundary:** Apply comment hygiene rules strictly to code you write or modify. Leave existing comments, TODOs, and formatting untouched in unedited code.
 
-### Rule 11: Remove Noise Comments
+### Rule 13: Remove Noise Comments
 * **Code-Restating Comments:** Delete comments that merely repeat what the syntax already shows (`// initialize counter`, `// return data`).
 * **Decorative Dividers:** Delete character banners (`// ====================`, `/* ----- ROUTES ----- */`).
 * **Emoji in Code:** Delete decorative emoji in comments and code (`// speed`, `// valid`).
 * **Vague TODOs:** Do not write empty placeholders like `// TODO: fix later` that lack actionable context.
 
-### Rule 12: Preserve High-Value Comments
+### Rule 14: Preserve High-Value Comments
 Retain only comments that explain **WHY**, not *WHAT*:
 * Non-obvious business rules or algorithmic rationale.
 * Security boundaries and threat mitigations.
@@ -145,36 +145,9 @@ Retain only comments that explain **WHY**, not *WHAT*:
 
 ---
 
-## 4. Web UI & Interface Design Hygiene
+## 4. Absolute Safety Gates
 
-**Scope Boundary:** Apply UI hygiene rules strictly to UI components you build or modify. Do not alter existing styling in untouched code. Project design tokens, established design systems, and explicit user design requests override Rules 13–15.
-
-### Rule 13: The Purpose Test
-* Every visual technique (gradients, shadows, blurs, animations) must serve a concrete hierarchy or functional purpose.
-* If a visual element exists merely "to look tech" or as an "AI template default", delete it.
-
-### Rule 14: Restraint in Color, Depth, and Geometry
-* **Default Color Palette:** Limit palettes to 2–3 core colors + 1 deliberate accent. Avoid unmotivated generic AI gradients and background radial glow orbs unless project design tokens mandate them.
-* **Cap Glassmorphism:** Limit `backdrop-filter: blur()` to at most 1 surface by default (e.g. floating navigation).
-* **Proportionate Radii:** Avoid making every button, card, and input a pill shape (`rounded-full`). Use deliberate, proportionate radius scales.
-* **Matte & Flat Elevation:** Flat/matte elevation by default. Reserve drop shadows exclusively for true elevated layers (modals, dropdown menus).
-
-### Rule 15: Authentic Content Structure
-* **Reject Cookie-Cutter Landing Templates:** Layouts must reflect actual content needs, not an arbitrary template sequence (`Hero -> 3 Cards -> Fake Testimonials -> FAQ -> Footer`).
-* **Varied Feature Hierarchy:** Flagship features deserve prominent display (full-width or interactive previews), while minor features belong in concise lists.
-* **Reject Fake Decorative Signals:** Do not use pulsing green dots that do not reflect real server status, generic sparkle/lightning icons, or emoji inside button text.
-
-### Rule 16: Accessibility & Platform Baseline
-* **Color Contrast (WCAG AA):** Minimum contrast ratio of 4.5:1 for standard text and 3:1 for large text.
-* **Keyboard Navigation:** All interactive elements must show a distinct, visible focus ring when navigated via `Tab`.
-* **Mobile Tap Targets:** Interactive elements must have a minimum touch target size of 44x44 pixels on mobile viewports.
-* **Semantic & Assistive Support:** Maintain valid semantic HTML, accessible name computation, logical focus order, and respect user motion preferences (`prefers-reduced-motion`).
-
----
-
-## 5. Absolute Safety Gates
-
-### Rule 17: Destructive Action Safeguard
+### Rule 15: Destructive Action Safeguard
 Before proposing or executing any action that is irreversible or modifies external/shared state outside the current local workspace:
 * **File & Directory Destruction:** Recursive or permanent deletions (`rm -rf`, bulk unrecoverable removal).
 * **Source Control History Rewrites:** Destructive git commands (`git reset --hard`, `git push --force`, `git clean -fd`).
@@ -183,12 +156,18 @@ Before proposing or executing any action that is irreversible or modifies extern
 * **External Side Effects & Publishing:** Package publishing (`npm publish`), production deployments, sending external messages, or mutating remote production services.
 * **Mandatory Gate:** Inspect scope, verify recoverable state, and halt for explicit user confirmation before execution. Do not request confirmation merely to explain, draft, or inspect a command.
 
-### Rule 18: Non-Negotiable Security Boundaries
+### Rule 16: Non-Negotiable Security Boundaries
 The lean code principle **must never simplify away**:
 * Input validation and sanitization at trust boundaries and API endpoints.
 * Error handling that prevents data corruption, data loss, or silent failure.
 * Authentication, authorization, and least-privilege checks.
 * Secret protection: never log or expose credentials, tokens, or environment secrets in client code or responses.
+
+---
+
+## 5. UI Integration
+
+For front-end, CSS, and user interface design tasks, activate the specialized [`gluttony-ui`](../gluttony-ui/SKILL.md) skill (`commands/gluttony-ui.toml`). Core `gluttony` preserves focus on clean code, architecture, and safety without imposing front-end layout constraints on non-UI tasks.
 
 ---
 
