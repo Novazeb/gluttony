@@ -2,6 +2,7 @@
 /**
  * Gluttony Build Generator (SSOT Compiler)
  * Synchronizes all platform rule adapters from the canonical rules in skills/gluttony/SKILL.md
+ * and skills/gluttony-ui/SKILL.md
  */
 
 const fs = require('fs');
@@ -9,13 +10,20 @@ const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
 const canonicalSkill = path.join(rootDir, 'skills', 'gluttony', 'SKILL.md');
+const canonicalUiSkill = path.join(rootDir, 'skills', 'gluttony-ui', 'SKILL.md');
 
 if (!fs.existsSync(canonicalSkill)) {
   console.error('[ERROR] Canonical skill not found at:', canonicalSkill);
   process.exit(1);
 }
 
+if (!fs.existsSync(canonicalUiSkill)) {
+  console.error('[ERROR] Canonical UI skill not found at:', canonicalUiSkill);
+  process.exit(1);
+}
+
 const skillContent = fs.readFileSync(canonicalSkill, 'utf8');
+const uiSkillContent = fs.readFileSync(canonicalUiSkill, 'utf8');
 
 // Core rules summary for compact adapters
 const coreSummary = `## 1. Operational Modes & Precedence
@@ -30,7 +38,7 @@ All modes preserve correctness, security, data integrity, and essential validati
 - If invalid or ambiguous, fall back to \`full\` and state briefly, or ask when critical. Never infer mode from wording or task complexity alone.
 
 ### Precedence
-Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) > Communication & Hygiene (1–5, 11–16). Explicit user instructions override lean and style rules (disclosed once in one line), never Safety Gates.
+Safety Gates (15, 16) > Correctness & Contracts (10, 11) > Lean Code (6, 7, 12) > Communication & Hygiene (1–5, 13–14). Explicit user instructions override lean and style rules (disclosed once in one line), never Safety Gates. For dedicated UI/front-end tasks, activate \`gluttony-ui\`.
 
 ## 2. Communication & Interaction
 - **Answer-First:** The first line must be the direct answer, command, or code diff. Cut greetings, praise, and rhetorical transitions in any language; reply in user's language. When material ambiguity blocks safe execution, ask a concise clarifying question on line 1.
@@ -55,15 +63,16 @@ Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) 
 - Delete emoji in comments and code (\`// speed\`).
 - Do not write vague TODOs lacking actionable context. Preserve only *WHY* comments.
 
-## 5. Web UI & Interface Design Hygiene
-- **Scope Boundary:** Apply UI rules strictly to components you modify. Project design tokens and explicit user requests override default styling constraints.
-- **The Purpose Test:** Every visual element without an explicit hierarchy function must be deleted.
-- **Sensible Restraint:** 2-3 core colors + 1 accent default; reject unmotivated AI glow gradients; cap glassmorphism at 1 surface; flat/matte default elevation.
-- **Accessibility Baseline:** WCAG AA contrast minimum 4.5:1 (3:1 large), visible keyboard focus rings, mobile tap target min 44x44px, semantic HTML, and respect reduced motion.
-
-## 6. Absolute Safety Gates
+## 5. Absolute Safety Gates
 - **Destructive Action Safeguard:** Inspect scope and request explicit confirmation before executing irreversible commands, unconstrained DB mutations (\`DELETE\`/\`UPDATE\` without \`WHERE\`, \`DROP\`, \`TRUNCATE\`), infrastructure teardown (\`terraform destroy\`, \`kubectl delete\`), package publishing (\`npm publish\`), or remote production changes. Do not prompt merely to explain or inspect commands.
 - **Security Guardrails:** Never simplify away input validation, error handling, auth checks, or least-privilege boundaries. Never expose credentials or secrets in logs or responses.
+
+## 6. UI Specialization (\`gluttony-ui\`)
+For front-end, CSS, and user interface design tasks, activate the specialized \`gluttony-ui\` skill (\`commands/gluttony-ui.toml\`):
+- **The Purpose Test:** Every visual element must serve a concrete hierarchy or functional purpose.
+- **Restraint:** 2-3 core colors + 1 accent, matte default elevation, cap glassmorphism at 1 surface.
+- **Accessibility:** WCAG AA contrast (min 4.5:1 / 3:1 large), keyboard focus rings, min 44x44px touch targets.
+- **Tooling:** Run \`node script/contrast.js\` for color contrast verification.
 `;
 
 const targets = [
@@ -73,15 +82,15 @@ const targets = [
   },
   {
     path: 'CLAUDE.md',
-    content: `# Gluttony - Instructions\n\nFor all programming, architecture, and review tasks in this repository, follow Gluttony rules:\n\n1. **Answer-First:** Start immediately with the technical answer, terminal command, or code diff. Zero preamble or closing pleasantries.\n2. **Numbered Actionable Steps:** Multi-step instructions must use a numbered list (1 step = 1 bounded action; use only needed steps).\n3. **Progressive Disclosure:** Keep routine lists to top 5 items; include all material findings for security, safety, or breaking changes.\n4. **Useful Time Estimates:** State realistic durations (\`~2 minutes\`, \`~15 minutes\`) when context permits.\n5. **Actionable Ending:** Conclude with 1 next step when further action is needed. Stop when complete.\n6. **Lean Engineering (YAGNI):** Reject speculative abstractions. Reuse local code. Standard library & native platform features first. Smallest complete diff.\n7. **Investigate Before Editing:** Trace callers, types, and dependencies proportionately before editing.\n8. **Risk-Based Clarification:** Ask when ambiguity affects correctness or security; offer at most 2-3 options with trade-offs.\n9. **Risk-Proportionate Verification:** Run verification appropriate to change scope. Never claim tests passed unless executed.\n10. **Preserve Contracts:** Protect public APIs, schemas, and backward compatibility.\n11. **Dependency Discipline:** Use stdlib first; introduce dependencies only for correctness, security, or maintainability.\n12. **Comment Hygiene:** Remove code-restating comments, decorative banners, and emoji. Preserve WHY rationale.\n13. **Web UI Hygiene:** Purpose-driven visuals, WCAG AA contrast (min 4.5:1), visible focus rings, 44x44px touch targets.\n14. **Safety Gate:** Require explicit user confirmation before irreversible destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n15. **Security Boundaries:** Never compromise validation, auth, error handling, or leak secrets.\n`
+    content: `# Gluttony - Instructions\n\nFor all programming, architecture, and review tasks in this repository, follow Gluttony rules:\n\n1. **Answer-First:** Start immediately with the technical answer, terminal command, or code diff. Zero preamble or closing pleasantries.\n2. **Numbered Actionable Steps:** Multi-step instructions must use a numbered list (1 step = 1 bounded action; use only needed steps).\n3. **Progressive Disclosure:** Keep routine lists to top 5 items; include all material findings for security, safety, or breaking changes.\n4. **Useful Time Estimates:** State realistic durations (\`~2 minutes\`, \`~15 minutes\`) when context permits.\n5. **Actionable Ending:** Conclude with at most 1 next step when further action is needed. Stop when complete.\n6. **Lean Engineering (YAGNI):** Reject speculative abstractions. Reuse local code. Standard library & native platform features first. Smallest complete diff.\n7. **Investigate Before Editing:** Trace callers, types, and dependencies proportionately before editing.\n8. **Risk-Based Clarification:** Ask when ambiguity affects correctness or security; offer at most 2-3 options with trade-offs.\n9. **Risk-Proportionate Verification:** Run verification appropriate to change scope. Never claim tests passed unless executed.\n10. **Preserve Contracts:** Protect public APIs, schemas, and backward compatibility.\n11. **Dependency Discipline:** Use stdlib first; introduce dependencies only for correctness, security, or maintainability.\n12. **Comment Hygiene:** Remove code-restating comments, decorative banners, and emoji. Preserve WHY rationale.\n13. **Safety Gate:** Require explicit user confirmation before irreversible destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n14. **Security Boundaries:** Never compromise validation, auth, error handling, or leak secrets.\n15. **UI Specialization:** For UI tasks, activate \`gluttony-ui\` (Purpose Test, WCAG AA min 4.5:1, 44x44px touch targets).\n`
   },
   {
     path: 'GEMINI.md',
-    content: `# Gluttony - System Instructions\n\nGluttony rules apply to all interactions:\n\n1. **Answer-First:** Lead directly with the technical solution, diff, or terminal command. Zero pleasantries or closing boilerplate.\n2. **Numbered Steps:** Multi-step work must be numbered. 1 step = 1 bounded action.\n3. **Progressive Disclosure:** Prioritize top 5 items for routine responses. Do not hide critical security or breaking changes.\n4. **Useful Time Estimates:** Provide measured duration estimates (\`~2 minutes\`, \`~15 minutes\`) when context permits.\n5. **Actionable Ending:** Conclude with 1 concrete action when needed; stop cleanly when the task is complete.\n6. **YAGNI & Lean Code:** Build only what is needed now. Prioritize Standard Library, local reuse, and native platform features.\n7. **Investigate First:** Understand callers, types, and execution flow before modifying code.\n8. **Risk-Based Clarification:** Ask when ambiguity materially affects correctness; present 2-3 top choices with concise trade-offs.\n9. **Risk-Proportionate Verification:** Include runnable verification suited to risk. Never claim a test passed without execution.\n10. **Preserve Contracts:** Maintain API schemas, public interfaces, and backward compatibility.\n11. **Dependency Discipline:** Prefer native capabilities; add dependencies only for security, correctness, or maintainability.\n12. **Comment Hygiene:** Remove redundant boilerplate comments and decorative emoji. Preserve business/security WHY comments.\n13. **Web UI Hygiene:** Flat/matte elevation, reject generic AI glow gradients, ensure WCAG AA contrast (min 4.5:1), and visible focus rings.\n14. **Safety Gate:** Request explicit confirmation before executing destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n15. **Security Gate:** Enforce input sanitization, error handling, least-privilege, and credential safety.\n`
+    content: `# Gluttony - System Instructions\n\nGluttony rules apply to all interactions:\n\n1. **Answer-First:** Lead directly with the technical solution, diff, or terminal command. Zero pleasantries or closing boilerplate.\n2. **Numbered Steps:** Multi-step work must be numbered. 1 step = 1 bounded action.\n3. **Progressive Disclosure:** Prioritize top 5 items for routine responses. Do not hide critical security or breaking changes.\n4. **Useful Time Estimates:** Provide measured duration estimates (\`~2 minutes\`, \`~15 minutes\`) when context permits.\n5. **Actionable Ending:** Conclude with at most 1 concrete action when needed; stop cleanly when the task is complete.\n6. **YAGNI & Lean Code:** Build only what is needed now. Prioritize Standard Library, local reuse, and native platform features.\n7. **Investigate First:** Understand callers, types, and execution flow before modifying code.\n8. **Risk-Based Clarification:** Ask when ambiguity materially affects correctness; present 2-3 top choices with concise trade-offs.\n9. **Risk-Proportionate Verification:** Include runnable verification suited to risk. Never claim a test passed without execution.\n10. **Preserve Contracts:** Maintain API schemas, public interfaces, and backward compatibility.\n11. **Dependency Discipline:** Prefer native capabilities; add dependencies only for security, correctness, or maintainability.\n12. **Comment Hygiene:** Remove redundant boilerplate comments and decorative emoji. Preserve business/security WHY comments.\n13. **Safety Gate:** Request explicit confirmation before executing destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n14. **Security Gate:** Enforce input sanitization, error handling, least-privilege, and credential safety.\n15. **UI Specialization:** For UI tasks, activate \`gluttony-ui\` (WCAG AA contrast min 4.5:1, visible focus rings, 44x44px tap targets).\n`
   },
   {
     path: '.clinerules',
-    content: `# Gluttony Rules for Cline / Roo-Code\n\n1. Answer-First: Deliver code or commands on line 1. No conversational opening or closing fluff.\n2. Numbered Actionable Steps: Multi-step instructions must be a numbered list (1 step = 1 bounded action).\n3. Progressive Disclosure: Top 5 items for routine responses; full disclosure for security or critical breaking changes.\n4. Realistic Time Estimates: State concrete durations (\`~2 minutes\`, \`~15 minutes\`) with clear assumptions.\n5. Actionable Ending: End with 1 concrete next step when action is needed; stop cleanly when finished.\n6. Lean Code (YAGNI): Reject speculative abstractions. Reuse local code. Standard library first. Minimal diff at root cause.\n7. Investigate First: Trace callers and data flow proportionately before editing.\n8. Risk-Based Clarification: If requirements are ambiguous at architectural level, ask with 2-3 top choices and 1-line trade-offs.\n9. Risk-Proportionate Verification: Run verification appropriate to risk. Never claim a test passed without running it.\n10. Preserve Contracts: Maintain API responses, schemas, and backward compatibility.\n11. Dependency Discipline: Standard library first; add dependencies only when materially improving security or correctness.\n12. Comment Hygiene: Remove code-restating comments, decorative ASCII banners, and emoji.\n13. Web UI Hygiene: Reject generic AI gradients/glows. Maintain WCAG AA contrast (min 4.5:1) and visible focus rings.\n14. Safety Gate: Require explicit user confirmation before destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n15. Security Boundaries: Never bypass input sanitization, error handling, or auth boundaries.\n`
+    content: `# Gluttony Rules for Cline / Roo-Code\n\n1. Answer-First: Deliver code or commands on line 1. No conversational opening or closing fluff.\n2. Numbered Actionable Steps: Multi-step instructions must be a numbered list (1 step = 1 bounded action).\n3. Progressive Disclosure: Top 5 items for routine responses; full disclosure for security or critical breaking changes.\n4. Realistic Time Estimates: State concrete durations (\`~2 minutes\`, \`~15 minutes\`) with clear assumptions.\n5. Actionable Ending: End with at most 1 concrete next step when action is needed; stop cleanly when finished.\n6. Lean Code (YAGNI): Reject speculative abstractions. Reuse local code. Standard library first. Minimal diff at root cause.\n7. Investigate First: Trace callers and data flow proportionately before editing.\n8. Risk-Based Clarification: If requirements are ambiguous at architectural level, ask with 2-3 top choices and 1-line trade-offs.\n9. Risk-Proportionate Verification: Run verification appropriate to risk. Never claim a test passed without running it.\n10. Preserve Contracts: Maintain API responses, schemas, and backward compatibility.\n11. Dependency Discipline: Standard library first; add dependencies only when materially improving security or correctness.\n12. Comment Hygiene: Remove code-restating comments, decorative ASCII banners, and emoji.\n13. Safety Gate: Require explicit user confirmation before destructive actions (\`rm -rf\`, \`git reset --hard\`, \`git push --force\`, \`drop table\`).\n14. Security Boundaries: Never bypass input sanitization, error handling, or auth boundaries.\n15. UI Specialization: For front-end work, use \`gluttony-ui\` (Purpose Test, WCAG AA min 4.5:1, 44x44px touch targets).\n`
   },
   {
     path: '.cursor/rules/gluttony.mdc',
@@ -106,6 +115,10 @@ const targets = [
   {
     path: '.openclaw/skills/gluttony/SKILL.md',
     content: skillContent
+  },
+  {
+    path: '.openclaw/skills/gluttony-ui/SKILL.md',
+    content: uiSkillContent
   }
 ];
 
@@ -126,6 +139,10 @@ const globalPluginDir = path.resolve(process.env.USERPROFILE || '', '.gemini', '
 if (fs.existsSync(globalPluginDir)) {
   const globalAgentRule = path.join(globalPluginDir, 'rules', 'AGENTS.md');
   const globalSkill = path.join(globalPluginDir, 'skills', 'gluttony', 'SKILL.md');
+  const globalUiSkill = path.join(globalPluginDir, 'skills', 'gluttony-ui', 'SKILL.md');
+  const globalCmd = path.join(globalPluginDir, 'commands', 'gluttony.toml');
+  const globalUiCmd = path.join(globalPluginDir, 'commands', 'gluttony-ui.toml');
+
   if (fs.existsSync(path.dirname(globalAgentRule))) {
     fs.writeFileSync(globalAgentRule, `# Gluttony Agent Rules\n\nThese instructions are active for all autonomous agents and programming assistants in this repository.\n\n${coreSummary}`, 'utf8');
     console.log('[COMPILED] Global plugin rules/AGENTS.md');
@@ -133,6 +150,21 @@ if (fs.existsSync(globalPluginDir)) {
   if (fs.existsSync(path.dirname(globalSkill))) {
     fs.writeFileSync(globalSkill, skillContent, 'utf8');
     console.log('[COMPILED] Global plugin skills/gluttony/SKILL.md');
+  }
+  const globalUiSkillDir = path.dirname(globalUiSkill);
+  if (!fs.existsSync(globalUiSkillDir)) {
+    fs.mkdirSync(globalUiSkillDir, { recursive: true });
+  }
+  fs.writeFileSync(globalUiSkill, uiSkillContent, 'utf8');
+  console.log('[COMPILED] Global plugin skills/gluttony-ui/SKILL.md');
+
+  const globalCmdDir = path.dirname(globalCmd);
+  if (fs.existsSync(globalCmdDir)) {
+    const localUiCmd = path.join(rootDir, 'commands', 'gluttony-ui.toml');
+    if (fs.existsSync(localUiCmd)) {
+      fs.copyFileSync(localUiCmd, globalUiCmd);
+      console.log('[COMPILED] Global plugin commands/gluttony-ui.toml');
+    }
   }
 }
 
