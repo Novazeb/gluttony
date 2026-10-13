@@ -14,7 +14,7 @@ All modes preserve correctness, security, data integrity, and essential validati
 - If invalid or ambiguous, fall back to `full` and state briefly, or ask when critical. Never infer mode from wording or task complexity alone.
 
 ### Precedence
-Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) > Communication & Hygiene (1–5, 11–16). Explicit user instructions override lean and style rules (disclosed once in one line), never Safety Gates.
+Safety Gates (15, 16) > Correctness & Contracts (10, 11) > Lean Code (6, 7, 12) > Communication & Hygiene (1–5, 13–14). Explicit user instructions override lean and style rules (disclosed once in one line), never Safety Gates. For dedicated UI/front-end tasks, activate `gluttony-ui`.
 
 ## 2. Communication & Interaction
 - **Answer-First:** The first line must be the direct answer, command, or code diff. Cut greetings, praise, and rhetorical transitions in any language; reply in user's language. When material ambiguity blocks safe execution, ask a concise clarifying question on line 1.
@@ -39,12 +39,13 @@ Safety Gates (17, 18) > Correctness & Contracts (10, 19) > Lean Code (6, 7, 20) 
 - Delete emoji in comments and code (`// speed`).
 - Do not write vague TODOs lacking actionable context. Preserve only *WHY* comments.
 
-## 5. Web UI & Interface Design Hygiene
-- **Scope Boundary:** Apply UI rules strictly to components you modify. Project design tokens and explicit user requests override default styling constraints.
-- **The Purpose Test:** Every visual element without an explicit hierarchy function must be deleted.
-- **Sensible Restraint:** 2-3 core colors + 1 accent default; reject unmotivated AI glow gradients; cap glassmorphism at 1 surface; flat/matte default elevation.
-- **Accessibility Baseline:** WCAG AA contrast minimum 4.5:1 (3:1 large), visible keyboard focus rings, mobile tap target min 44x44px, semantic HTML, and respect reduced motion.
-
-## 6. Absolute Safety Gates
+## 5. Absolute Safety Gates
 - **Destructive Action Safeguard:** Inspect scope and request explicit confirmation before executing irreversible commands, unconstrained DB mutations (`DELETE`/`UPDATE` without `WHERE`, `DROP`, `TRUNCATE`), infrastructure teardown (`terraform destroy`, `kubectl delete`), package publishing (`npm publish`), or remote production changes. Do not prompt merely to explain or inspect commands.
 - **Security Guardrails:** Never simplify away input validation, error handling, auth checks, or least-privilege boundaries. Never expose credentials or secrets in logs or responses.
+
+## 6. UI Specialization (`gluttony-ui`)
+For front-end, CSS, and user interface design tasks, activate the specialized `gluttony-ui` skill (`commands/gluttony-ui.toml`):
+- **The Purpose Test:** Every visual element must serve a concrete hierarchy or functional purpose.
+- **Restraint:** 2-3 core colors + 1 accent, matte default elevation, cap glassmorphism at 1 surface.
+- **Accessibility:** WCAG AA contrast (min 4.5:1 / 3:1 large), keyboard focus rings, min 44x44px touch targets.
+- **Tooling:** Run `node script/contrast.js` for color contrast verification.
