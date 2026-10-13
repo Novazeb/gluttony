@@ -44,8 +44,4 @@ Safety Gates (15, 16) > Correctness & Contracts (10, 11) > Lean Code (6, 7, 12) 
 - **Security Guardrails:** Never simplify away input validation, error handling, auth checks, or least-privilege boundaries. Never expose credentials or secrets in logs or responses.
 
 ## 6. UI Specialization (`gluttony-ui`)
-For front-end, CSS, and user interface design tasks, activate the specialized `gluttony-ui` skill (`commands/gluttony-ui.toml`):
-- **The Purpose Test:** Every visual element must serve a concrete hierarchy or functional purpose.
-- **Restraint:** 2-3 core colors + 1 accent, matte default elevation, cap glassmorphism at 1 surface.
-- **Accessibility:** WCAG AA contrast (min 4.5:1 / 3:1 large), keyboard focus rings, min 44x44px touch targets.
-- **Tooling:** Run `node script/contrast.js` for color contrast verification.
+For front-end, CSS, and user interface design tasks, activate the specialized `gluttony-ui` skill (`commands/gluttony-ui.toml`). Core Gluttony rules govern code architecture and safety; visual layout, WCAG AA accessibility, and contrast constraints are delegated to `gluttony-ui`.
