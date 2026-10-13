@@ -30,7 +30,7 @@ assert.strictEqual(fm.name, 'gluttony', 'Frontmatter name must be "gluttony"');
 assert.ok(fm.description && fm.description.length > 20, 'Frontmatter description must be descriptive');
 assert.ok(skillContent.includes('argument-hint:'), 'Frontmatter must specify argument-hint');
 
-// Validate Rule Sections & Essential Rules
+// Validate Rule Sections & Essential Rules in core gluttony
 const requiredRules = [
   'Rule 1: Answer-First & Zero Ceremony',
   'Rule 2: Numbered Actionable Steps',
@@ -42,16 +42,12 @@ const requiredRules = [
   'Rule 8: Investigate Before Editing',
   'Rule 9: Risk-Based Clarification (Stop Guessing)',
   'Rule 10: Risk-Proportionate Verification',
-  'Rule 11: Remove Noise Comments',
-  'Rule 12: Preserve High-Value Comments',
-  'Rule 13: The Purpose Test',
-  'Rule 14: Restraint in Color, Depth, and Geometry',
-  'Rule 15: Authentic Content Structure',
-  'Rule 16: Accessibility & Platform Baseline',
-  'Rule 17: Destructive Action Safeguard',
-  'Rule 18: Non-Negotiable Security Boundaries',
-  'Rule 19: Preserve Existing Contracts',
-  'Rule 20: Dependency Discipline'
+  'Rule 11: Preserve Existing Contracts',
+  'Rule 12: Dependency Discipline',
+  'Rule 13: Remove Noise Comments',
+  'Rule 14: Preserve High-Value Comments',
+  'Rule 15: Destructive Action Safeguard',
+  'Rule 16: Non-Negotiable Security Boundaries'
 ];
 
 for (const rule of requiredRules) {
@@ -65,7 +61,29 @@ assert.ok(skillContent.includes('Scope Boundary'), 'SKILL.md must define Scope B
 assert.ok(skillContent.includes('`lite`'), 'SKILL.md must define lite mode');
 assert.ok(skillContent.includes('`full`'), 'SKILL.md must define full mode');
 assert.ok(skillContent.includes('`strict`'), 'SKILL.md must define strict mode');
-console.log(`[PASS] Test 1: Canonical SKILL.md validated (${requiredRules.length} rules intact with precedence, boundaries, and modes)`);
+
+// Validate specialized gluttony-ui skill
+const uiSkillPath = path.join(rootDir, 'skills', 'gluttony-ui', 'SKILL.md');
+assert.ok(fs.existsSync(uiSkillPath), 'Canonical skills/gluttony-ui/SKILL.md must exist');
+const uiSkillContent = fs.readFileSync(uiSkillPath, 'utf8');
+assert.ok(uiSkillContent.includes('name: gluttony-ui'), 'UI skill frontmatter name must be gluttony-ui');
+
+const requiredUiRules = [
+  'Rule 1: The Purpose Test',
+  'Rule 2: Restraint in Color, Depth, and Geometry',
+  'Rule 3: Authentic Content Structure',
+  'Rule 4: Accessibility & Platform Baseline',
+  'Rule 5: Contrast Ratio Verification Tooling'
+];
+
+for (const rule of requiredUiRules) {
+  assert.ok(uiSkillContent.includes(rule), `gluttony-ui SKILL.md must contain definition: ${rule}`);
+}
+
+const uiCmdPath = path.join(rootDir, 'commands', 'gluttony-ui.toml');
+assert.ok(fs.existsSync(uiCmdPath), 'commands/gluttony-ui.toml must exist');
+
+console.log(`[PASS] Test 1: Canonical gluttony (${requiredRules.length} core rules) & gluttony-ui (${requiredUiRules.length} UI rules) validated`);
 
 // --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [
