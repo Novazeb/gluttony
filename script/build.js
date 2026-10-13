@@ -159,12 +159,31 @@ if (fs.existsSync(globalPluginDir)) {
   console.log('[COMPILED] Global plugin skills/gluttony-ui/SKILL.md');
 
   const globalCmdDir = path.dirname(globalCmd);
-  if (fs.existsSync(globalCmdDir)) {
-    const localUiCmd = path.join(rootDir, 'commands', 'gluttony-ui.toml');
-    if (fs.existsSync(localUiCmd)) {
-      fs.copyFileSync(localUiCmd, globalUiCmd);
-      console.log('[COMPILED] Global plugin commands/gluttony-ui.toml');
+  if (!fs.existsSync(globalCmdDir)) {
+    fs.mkdirSync(globalCmdDir, { recursive: true });
+  }
+  const localCmd = path.join(rootDir, 'commands', 'gluttony.toml');
+  if (fs.existsSync(localCmd)) {
+    fs.copyFileSync(localCmd, globalCmd);
+    console.log('[COMPILED] Global plugin commands/gluttony.toml');
+  }
+  const localUiCmd = path.join(rootDir, 'commands', 'gluttony-ui.toml');
+  if (fs.existsSync(localUiCmd)) {
+    fs.copyFileSync(localUiCmd, globalUiCmd);
+    console.log('[COMPILED] Global plugin commands/gluttony-ui.toml');
+  }
+
+  // Synchronize hooks
+  const globalHooksDir = path.join(globalPluginDir, 'hooks');
+  const localHooksDir = path.join(rootDir, 'hooks');
+  if (fs.existsSync(localHooksDir)) {
+    if (!fs.existsSync(globalHooksDir)) {
+      fs.mkdirSync(globalHooksDir, { recursive: true });
     }
+    for (const hookFile of fs.readdirSync(localHooksDir)) {
+      fs.copyFileSync(path.join(localHooksDir, hookFile), path.join(globalHooksDir, hookFile));
+    }
+    console.log('[COMPILED] Global plugin hooks synchronized');
   }
 }
 
