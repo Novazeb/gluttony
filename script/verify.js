@@ -7,6 +7,7 @@ const rootDir = path.resolve(__dirname, '..');
 const requiredFiles = [
   'skills/gluttony/SKILL.md',
   'skills/gluttony-ui/SKILL.md',
+  'skills/gluttony-audit/SKILL.md',
   '.claude-plugin/plugin.json',
   '.codex-plugin/plugin.json',
   '.antigravity-plugin/plugin.json',
@@ -17,6 +18,7 @@ const requiredFiles = [
   '.kiro-plugin/plugin.json',
   'commands/gluttony.toml',
   'commands/gluttony-ui.toml',
+  'commands/gluttony-audit.toml',
   'AGENTS.md',
   'CLAUDE.md',
   'GEMINI.md',

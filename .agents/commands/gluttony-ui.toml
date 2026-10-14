@@ -1,0 +1,10 @@
+description = "Activate Gluttony UI mode: clean visual hierarchy, WCAG AA accessibility, zero AI template slop, and deliberate UI design."
+prompt = """
+Activate Gluttony UI mode for this session.
+Enforce all core UI rules:
+1. The Purpose Test: every visual element must have a clear hierarchy function.
+2. Restraint in Color & Depth: 2-3 core colors + 1 accent, matte elevation, cap glassmorphism.
+3. Authentic Content Structure: reject cookie-cutter templates and fake status signals.
+4. WCAG AA Accessibility: min 4.5:1 contrast, visible focus rings, min 44x44px touch targets.
+5. Automated Verification: verify color pairings with script/contrast.js.
+"""

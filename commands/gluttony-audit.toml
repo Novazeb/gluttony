@@ -1,0 +1,9 @@
+description = "Run Gluttony passive bloat & over-engineering audit across the workspace or specified path."
+prompt = """
+Execute a strict read-only Gluttony audit ($ARGUMENTS).
+Scan for:
+1. YAGNI violations, speculative abstractions, single-implementor interfaces, and dead code.
+2. Dependencies replaceable by native platform or standard library capabilities.
+3. Boilerplate comments, code paraphrasing, decorative dividers, and AI comment noise.
+Do not modify any files. Deliver a ranked deletion punch-list (1 line per finding grouped by severity) with a 1-line impact summary.
+"""

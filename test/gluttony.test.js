@@ -89,7 +89,20 @@ assert.ok(!coreCmdContent.includes('monotonous AI template designs'), 'commands/
 const uiCmdPath = path.join(rootDir, 'commands', 'gluttony-ui.toml');
 assert.ok(fs.existsSync(uiCmdPath), 'commands/gluttony-ui.toml must exist');
 
-console.log(`[PASS] Test 1: Canonical gluttony (${requiredRules.length} core rules) & gluttony-ui (${requiredUiRules.length} UI rules) validated`);
+// Validate specialized gluttony-audit skill
+const auditSkillPath = path.join(rootDir, 'skills', 'gluttony-audit', 'SKILL.md');
+assert.ok(fs.existsSync(auditSkillPath), 'Canonical skills/gluttony-audit/SKILL.md must exist');
+const auditSkillContent = fs.readFileSync(auditSkillPath, 'utf8');
+assert.ok(auditSkillContent.includes('name: gluttony-audit'), 'Audit skill frontmatter name must be gluttony-audit');
+assert.ok(auditSkillContent.includes('Strictly Read-Only'), 'Audit skill must enforce Strictly Read-Only boundary');
+assert.ok(auditSkillContent.includes('Axis 1: YAGNI, Speculation & Architectural Indirection'), 'Audit skill must define Axis 1');
+assert.ok(auditSkillContent.includes('Axis 2: Dependency Bloat vs Native/Stdlib'), 'Audit skill must define Axis 2');
+assert.ok(auditSkillContent.includes('Axis 3: Comment Hygiene & Boilerplate Slop'), 'Audit skill must define Axis 3');
+
+const auditCmdPath = path.join(rootDir, 'commands', 'gluttony-audit.toml');
+assert.ok(fs.existsSync(auditCmdPath), 'commands/gluttony-audit.toml must exist');
+
+console.log(`[PASS] Test 1: Canonical gluttony (${requiredRules.length} core rules), gluttony-ui (${requiredUiRules.length} UI rules), and gluttony-audit (3 audit axes) validated`);
 
 // --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [

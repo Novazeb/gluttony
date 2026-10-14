@@ -19,7 +19,7 @@ Gluttony is maintained by [Novazeb](https://github.com/Novazeb) and enforces str
 2. **Comment & Code Hygiene:** PRs must never introduce code-restating comments, decorative banners, or third-party tracking.
 3. **Internal Repository Verification:** All PRs modifying this repository must pass `npm test` and `npm run verify` to ensure platform manifests and YAML headers remain structurally valid.
 4. **Structured Format:** Any documentation or prompt additions must follow numbered actionable steps and cap lists at 5 items.
-5. **Single Source of Truth (SSOT):** Canonical rules live in `skills/gluttony/SKILL.md` and `skills/gluttony-ui/SKILL.md`. Always run `npm run build` after editing rules to sync platform adapters automatically.
+5. **Single Source of Truth (SSOT):** Canonical rules and skills live in `skills/gluttony/SKILL.md`, `skills/gluttony-ui/SKILL.md`, and `skills/gluttony-audit/SKILL.md`. Always run `npm run build` after editing rules to sync platform adapters automatically.
 
 ---
 
