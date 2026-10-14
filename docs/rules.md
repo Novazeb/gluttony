@@ -1,8 +1,9 @@
 # Gluttony Rules Specification
 
-Gluttony is decoupled into two complementary skills:
+Gluttony is architected into three complementary skills:
 1. **`gluttony` (Core Engineering):** Enforces 16 core rules across communication, lean architecture, comment hygiene, and absolute safety gates.
 2. **`gluttony-ui` (Interface & Design Hygiene):** Dedicated skill enforcing 5 core UI rules for clean visual hierarchy, restrained design, and WCAG AA accessibility.
+3. **`gluttony-audit` (Passive Bloat & Over-Engineering Auditor):** Dedicated read-only skill scanning across 3 audit axes to detect bloat, dead code, and speculative abstractions without modifying files.
 
 ---
 
@@ -26,3 +27,14 @@ Specialized frontend and design rules:
 3. **Authentic Content Structure (UI Rule 3):** Reject cookie-cutter landing templates, varied feature display, and fake status signals.
 4. **Accessibility & Platform Baseline (UI Rule 4):** WCAG AA contrast (min 4.5:1 / 3:1 large), visible keyboard focus rings, mobile tap targets min 44x44px, and semantic HTML.
 5. **Contrast Ratio Verification Tooling (UI Rule 5):** Automated color contrast verification using `script/contrast.js`.
+
+---
+
+## 3. Passive Bloat & Over-Engineering Audit (`gluttony-audit`)
+
+Read-only codebase and diff evaluation across 3 hunting axes:
+1. **Axis 1 (YAGNI & Architectural Indirection):** Single-implementor interfaces, speculative generic wrappers, dead exports, and multi-layer passthrough delegation.
+2. **Axis 2 (Dependency Bloat vs. Native):** Third-party packages replaceable with native ECMAScript or standard library features (`lodash`, `moment`, `axios`, `chalk`, etc.).
+3. **Axis 3 (Comment Hygiene & AI Slop):** Paraphrase comments, decorative banners, emoji noise, and vague non-actionable TODOs.
+4. **Safety Enforcement:** Strictly read-only; delivers a 1-line-per-finding ranked punch-list grouped by severity with an impact summary.
+

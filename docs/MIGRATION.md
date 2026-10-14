@@ -18,4 +18,4 @@ This guide outlines how to migrate an existing codebase to Gluttony principles w
 
 3. **Phase 3: Embed Universal Guardrails (~2 minutes)**
    * Copy `AGENTS.md`, `CLAUDE.md`, or `.cursor/rules/gluttony.mdc` into your project root.
-   * Verify that your AI assistant enforces the 16 core Gluttony rules automatically (plus `gluttony-ui` for frontend tasks).
+   * Verify that your AI assistant enforces the 16 core Gluttony rules automatically (plus `gluttony-ui` for frontend tasks and `gluttony-audit` for bloat detection).

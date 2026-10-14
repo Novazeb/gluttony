@@ -48,22 +48,22 @@ Strictly passive, read-only over-engineering and bloat auditor. Identifies code 
 ## 3. Output Schema (Ranked Punch-List)
 
 Output findings grouped strictly by severity. Exactly one line per finding formatted as:
-`- \`<path>:<line>\` — <masalah/bloat> → <solusi pangkas/alternatif native>`
+`- \`<path>:<line>\` — <issue/bloat> → <lean fix/native replacement>`
 
 Conclude with exactly one line summary of impact:
-`**Ringkasan:** X temuan (Y high, Z medium, W low), estimasi ~N baris bisa dipangkas, M dependensi bisa dihapus.`
+`**Summary:** X findings (Y high, Z medium, W low), estimated ~N lines pruned, M dependencies removed.`
 
 ### Example Output
 ```markdown
 ### High
-- `src/utils/date.ts:12` — dependensi `moment` → ganti native `Intl.DateTimeFormat`
-- `src/services/wrapper.ts:1-45` — passthrough wrapper tanpa transformasi → hapus wrapper, panggil service langsung
+- `src/utils/date.ts:12` — dependency `moment` → replace with native `Intl.DateTimeFormat`
+- `src/services/wrapper.ts:1-45` — passthrough wrapper with no transformation → remove wrapper, call service directly
 
 ### Medium
-- `src/services/user.ts:4` — interface `IUserService` implementor tunggal → hapus interface, gunakan class langsung
+- `src/services/user.ts:4` — single-implementor interface `IUserService` → remove interface, use concrete class directly
 
 ### Low
-- `src/api/auth.ts:45` — komentar paraphrase `// validate token` → hapus komentar
+- `src/api/auth.ts:45` — code-paraphrasing comment `// validate token` → remove redundant comment
 
-**Ringkasan:** 4 temuan (2 high, 1 medium, 1 low), estimasi ~60 baris bisa dipangkas, 1 dependensi bisa dihapus.
+**Summary:** 4 findings (2 high, 1 medium, 1 low), estimated ~60 lines pruned, 1 dependency removed.
 ```

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-10-14
+
+### Added
+- **Passive Bloat Hunter (`gluttony-audit`):** Dedicated read-only auditing skill scanning for YAGNI violations, speculative architecture, redundant third-party dependencies, and AI comment noise.
+- **Slash Command (`/gluttony-audit [path]`):** Instant workspace or path audit returning a single-line-per-finding ranked deletion punch-list with impact summary.
+- **Visual Benchmark Infographic (`assets/benchmark.png`):** High-resolution developer dashboard infographic replacing static benchmark table in README.
+
+### Changed
+- **Tri-Skill Platform Architecture:** Expanded build pipeline to automatically compile and distribute `gluttony`, `gluttony-ui`, and `gluttony-audit` across all platform adapters, workspace `.agents/`, and global configurations.
+- **Strict English Documentation Standard:** Standardized 100% of repository markdown documentation, skills, and configuration specifications to English.
+
 ## [1.9.0] - 2026-10-13
 
 ### Changed

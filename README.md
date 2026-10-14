@@ -5,7 +5,7 @@
 # Gluttony
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.9.0-green.svg)](https://github.com/Novazeb/gluttony)
+[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](https://github.com/Novazeb/gluttony)
 [![Author: Novazeb](https://img.shields.io/badge/author-Novazeb-black.svg)](https://github.com/Novazeb)
 
 <p align="center">
@@ -40,28 +40,21 @@ Gluttony supports three execution intensities via `[lite|full|strict]`. All mode
 
 ---
 
-## Benchmark Komparatif (5 Skenario Uji)
+## Comparative Benchmark: Raw AI vs Gluttony Mode
 
-Evaluasi head-to-head antara **AI Tanpa Gluttony (Raw Baseline)** dan **AI Dengan Gluttony (Minimal Sufficient Engineering)** pada 5 skenario teknis:
+<p align="center">
+  <img src="assets/benchmark.png" alt="Gluttony Benchmark: Raw AI Baseline vs Gluttony Mode" width="100%" />
+</p>
 
-| Metrik Evaluasi | AI Tanpa Gluttony | AI Dengan Gluttony | Delta / Peningkatan |
-| :--- | :---: | :---: | :---: |
-| **Test Pass Rate** | 60% | 100% | +40% keandalan fungsional |
-| **Regression Rate** | 40% | 0% | 0 regresi lintas modul |
-| **Rata-rata Ukuran Diff** | 56 baris | 17 baris | -70% pemangkasan kode redundan |
-| **Rata-rata Token Output** | 638 token | 197 token | -69% penghematan biaya & latensi |
-| **Integritas Kontrak & API** | 4/5 | 5/5 | 100% *backward-compatible* |
-| **Dependensi Spekulatif** | 2 kasus | 0 kasus | 0 dependensi ad-hoc yang tidak perlu |
-| **Noise Komentar & Fluff** | 5/5 (Tinggi) | 0/5 (Nol) | 100% *Answer-first* murni |
+Head-to-head empirical evaluation across 5 rigorous technical test scenarios:
 
-### Rincian 5 Skenario Uji:
-1. **Bug Fix Terisolasi (Pagination Offset):** Gluttony menghasilkan 4 baris diff terarah pada akar masalah vs 28 baris diff pembengkakan wrapper pada AI biasa.
-2. **Fitur Baru (In-Memory Rate Limiter):** Gluttony mengoptimalkan standard library (`Map` & timer bawaan) vs instalasi paket pihak ketiga spekulatif.
-3. **Modifikasi Kontrak API (User Profile DTO):** Gluttony menjaga backward-compatibility (Rule 19) tanpa memutus aplikasi consumer/mobile.
-4. **Patch Keamanan (Path Traversal & Sanitization):** Gluttony mempertahankan otorisasi dan proteksi rahasia (Rule 18) tanpa melemahkan sistem demi kelulusan tes.
-5. **UI Responsif & Aksesibilitas (Navigation Modal):** Gluttony menjamin kontras WCAG AA (7.1:1), keyboard focus trap, dan target sentuh $\ge$44px (Rule 14 & 16) tanpa AI glow template.
+1. **Isolated Bug Fix (Pagination Offset):** Surgical 4-line diff targeting root cause vs. 28-line wrapper bloat in raw AI baseline.
+2. **New Feature Build (In-Memory Rate Limiter):** Standard library first (`Map` & native timers) vs. speculative third-party package installations.
+3. **API Contract Migration (User Profile DTO):** Guarantees 100% backward compatibility without breaking downstream consumers.
+4. **Security Hardening (Path Traversal & Sanitization):** Enforces least privilege and secret safety without compromising test suites.
+5. **UI & Accessibility (Modal Component):** Enforces WCAG AA contrast (7.1:1), keyboard focus trapping, and $\ge$44px touch targets without generic AI templates.
 
-Jalankan benchmark secara mandiri:
+Execute the benchmark suite locally:
 ```bash
 npm run benchmark
 ```

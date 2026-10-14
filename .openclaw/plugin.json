@@ -1,6 +1,6 @@
 {
   "name": "gluttony",
-  "version": "1.9.0",
+  "version": "2.0.0",
   "description": "High-precision, lean engineering mode: enforces YAGNI, eliminates AI boilerplate, and minimizes cognitive load.",
   "author": "Novazeb",
   "homepage": "https://github.com/Novazeb/gluttony",
