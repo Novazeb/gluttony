@@ -68,7 +68,7 @@ Resolve conflicts in strict order:
 1. **YAGNI:** Build strictly what is needed now.
 2. **Reuse Local Code:** Search existing codebase before writing new utilities.
 3. **Standard Library First:** Prefer built-ins over third-party packages.
-4. **Native Platform Features:** Prefer native primitives over JavaScript packages.
+4. **Native Platform Features:** Prefer native platform primitives over third-party packages.
 5. **Smallest Diff & Root Cause:** Fix root causes cleanly; avoid patching symptoms across callers.
 
 ### Rule 7: Reject Speculative Abstractions

@@ -57,3 +57,9 @@ Apply UI hygiene rules strictly to UI components and views you build or modify. 
   node script/contrast.js "#FFFFFF" "#111827" --target=normal
   ```
 * Never guess contrast ratios when selecting text and background colors for custom themes.
+
+---
+
+## Bloat Auditing
+
+For passive read-only audits of UI component bloat (unused imports, dead CSS, orphaned components), run the [`gluttony-audit`](../gluttony-audit/SKILL.md) skill against the frontend directory.

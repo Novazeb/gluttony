@@ -17,6 +17,7 @@ Strictly passive, read-only over-engineering and bloat auditor. Identifies code 
 
 * **Strictly Read-Only:** NEVER modify, create, or delete files. Tool execution is restricted to read, search, and non-mutating inspection commands.
 * **Not a General Code Review:** Do NOT inspect bugs, logic errors, runtime performance, security vulnerabilities, or code formatting. Focus exclusively on bloat, speculative architecture, unnecessary dependencies, and comment noise.
+* **Frontend Projects:** For UI-specific bloat (dead CSS, orphaned components, gratuitous animations), combine with [`gluttony-ui strict`](../gluttony-ui/SKILL.md) mode.
 * **Scope Resolution:** If `[path]` is provided, audit that target file or directory. If omitted or empty, detect git modified files (`git diff --name-only`) or inspect the workspace repository root.
 
 ---
@@ -30,12 +31,10 @@ Strictly passive, read-only over-engineering and bloat auditor. Identifies code 
 * **Pointless Indirection:** Passthrough functions or multi-layer delegation chains that perform no data transformation.
 
 ### Axis 2: Dependency Bloat vs Native/Stdlib
-* **Redundant Utility Libraries:** Dependencies solvable via native platform features or standard library:
-  * `lodash` / `underscore` -> Native ES2020+ methods (`flatMap`, `Object.fromEntries`, `structuredClone`).
-  * `moment` / `dayjs` -> Native `Intl.DateTimeFormat` or `Date`.
-  * `axios` / `got` / `node-fetch` -> Native `fetch` (Node 18+, modern browser runtimes).
-  * `chalk` / `picocolors` -> Native ANSI escape sequences or `node:util.styleText`.
-  * `mkdirp` / `rimraf` -> Native `fs.mkdirSync(path, { recursive: true })` / `fs.rmSync(path, { recursive: true, force: true })`.
+* **Redundant Utility Libraries:** Dependencies solvable via native platform features or standard library.
+  * **Node.js:** `lodash` → ES2020+ (`flatMap`, `structuredClone`); `moment` → `Intl.DateTimeFormat`; `axios` → native `fetch` (Node 18+); `chalk` → `node:util.styleText`; `mkdirp`/`rimraf` → `fs.mkdirSync`/`fs.rmSync` with `{ recursive: true }`.
+  * **Python:** `requests` → `urllib.request`; `six` → drop (Python 2 compat); `pathlib2` → `pathlib`; `typing-extensions` on 3.11+ → `typing`.
+  * **Go:** `github.com/pkg/errors` → `fmt.Errorf` with `%w`; `io/ioutil` → `io`/`os` (deprecated since Go 1.16).
 
 ### Axis 3: Comment Hygiene & Boilerplate Slop
 * **Code Paraphrasing Comments:** Comments that restate what the code clearly expresses (`// increment count`, `// return response`, `// initialize variable`).

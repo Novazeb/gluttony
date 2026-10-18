@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-10-18
+
+### Changed
+- **Language-Agnostic Core:** Removed JavaScript-specific wording from Rule 6 (Simplicity Ladder) — now reads "native platform primitives over third-party packages" to cover all ecosystems.
+- **Polyglot Audit Examples:** Expanded Axis 2 (Dependency Bloat) with Python (`requests` → `urllib`, `six`, `pathlib2`) and Go (`pkg/errors` → `%w`, `io/ioutil`) examples alongside existing Node.js entries.
+- **Cross-Skill References:** Added bidirectional links between `gluttony-ui` and `gluttony-audit` for frontend bloat scanning and UI component auditing.
+- **GEMINI.md Clarity:** Added canonical source note clarifying the 15-item summary is compressed from the full 16 rules in `skills/gluttony/SKILL.md`.
+
 ## [2.0.0] - 2026-10-14
 
 ### Added
