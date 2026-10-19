@@ -15,7 +15,10 @@
     "build": "node script/build.js",
     "test": "node test/gluttony.test.js",
     "verify": "node script/verify.js",
-    "benchmark": "node test/benchmark/runner.js"
+    "benchmark": "node test/benchmark/runner.js",
+    "site:dev": "npm --prefix site run dev",
+    "site:build": "npm --prefix site run build",
+    "site:preview": "npm --prefix site run preview"
   },
   "keywords": [
     "yagni",
