@@ -12,6 +12,7 @@ const rootDir = path.resolve(__dirname, '..');
 const canonicalSkill = path.join(rootDir, 'skills', 'gluttony', 'SKILL.md');
 const canonicalUiSkill = path.join(rootDir, 'skills', 'gluttony-ui', 'SKILL.md');
 const canonicalAuditSkill = path.join(rootDir, 'skills', 'gluttony-audit', 'SKILL.md');
+const canonicalRefactorSkill = path.join(rootDir, 'skills', 'gluttony-refactor', 'SKILL.md');
 
 if (!fs.existsSync(canonicalSkill)) {
   console.error('[ERROR] Canonical skill not found at:', canonicalSkill);
@@ -28,9 +29,15 @@ if (!fs.existsSync(canonicalAuditSkill)) {
   process.exit(1);
 }
 
+if (!fs.existsSync(canonicalRefactorSkill)) {
+  console.error('[ERROR] Canonical refactor skill not found at:', canonicalRefactorSkill);
+  process.exit(1);
+}
+
 const skillContent = fs.readFileSync(canonicalSkill, 'utf8');
 const uiSkillContent = fs.readFileSync(canonicalUiSkill, 'utf8');
 const auditSkillContent = fs.readFileSync(canonicalAuditSkill, 'utf8');
+const refactorSkillContent = fs.readFileSync(canonicalRefactorSkill, 'utf8');
 
 // Core rules summary for compact adapters
 const coreSummary = `## 1. Operational Modes & Precedence
@@ -126,6 +133,10 @@ const targets = [
   {
     path: '.openclaw/skills/gluttony-audit/SKILL.md',
     content: auditSkillContent
+  },
+  {
+    path: '.openclaw/skills/gluttony-refactor/SKILL.md',
+    content: refactorSkillContent
   }
 ];
 
@@ -147,14 +158,15 @@ if (fs.existsSync(workspaceAgentsDir)) {
   const syncSkills = [
     { name: 'gluttony', content: skillContent },
     { name: 'gluttony-ui', content: uiSkillContent },
-    { name: 'gluttony-audit', content: auditSkillContent }
+    { name: 'gluttony-audit', content: auditSkillContent },
+    { name: 'gluttony-refactor', content: refactorSkillContent }
   ];
   for (const s of syncSkills) {
     const sDir = path.join(workspaceAgentsDir, 'skills', s.name);
     if (!fs.existsSync(sDir)) fs.mkdirSync(sDir, { recursive: true });
     fs.writeFileSync(path.join(sDir, 'SKILL.md'), s.content, 'utf8');
   }
-  const syncCmds = ['gluttony.toml', 'gluttony-ui.toml', 'gluttony-audit.toml'];
+  const syncCmds = ['gluttony.toml', 'gluttony-ui.toml', 'gluttony-audit.toml', 'gluttony-refactor.toml'];
   const cmdDir = path.join(workspaceAgentsDir, 'commands');
   if (!fs.existsSync(cmdDir)) fs.mkdirSync(cmdDir, { recursive: true });
   for (const c of syncCmds) {
@@ -171,9 +183,11 @@ if (fs.existsSync(globalPluginDir)) {
   const globalSkill = path.join(globalPluginDir, 'skills', 'gluttony', 'SKILL.md');
   const globalUiSkill = path.join(globalPluginDir, 'skills', 'gluttony-ui', 'SKILL.md');
   const globalAuditSkill = path.join(globalPluginDir, 'skills', 'gluttony-audit', 'SKILL.md');
+  const globalRefactorSkill = path.join(globalPluginDir, 'skills', 'gluttony-refactor', 'SKILL.md');
   const globalCmd = path.join(globalPluginDir, 'commands', 'gluttony.toml');
   const globalUiCmd = path.join(globalPluginDir, 'commands', 'gluttony-ui.toml');
   const globalAuditCmd = path.join(globalPluginDir, 'commands', 'gluttony-audit.toml');
+  const globalRefactorCmd = path.join(globalPluginDir, 'commands', 'gluttony-refactor.toml');
 
   if (fs.existsSync(path.dirname(globalAgentRule))) {
     fs.writeFileSync(globalAgentRule, `# Gluttony Agent Rules\n\nThese instructions are active for all autonomous agents and programming assistants in this repository.\n\n${coreSummary}`, 'utf8');
@@ -197,6 +211,13 @@ if (fs.existsSync(globalPluginDir)) {
   fs.writeFileSync(globalAuditSkill, auditSkillContent, 'utf8');
   console.log('[COMPILED] Global plugin skills/gluttony-audit/SKILL.md');
 
+  const globalRefactorSkillDir = path.dirname(globalRefactorSkill);
+  if (!fs.existsSync(globalRefactorSkillDir)) {
+    fs.mkdirSync(globalRefactorSkillDir, { recursive: true });
+  }
+  fs.writeFileSync(globalRefactorSkill, refactorSkillContent, 'utf8');
+  console.log('[COMPILED] Global plugin skills/gluttony-refactor/SKILL.md');
+
   const globalCmdDir = path.dirname(globalCmd);
   if (!fs.existsSync(globalCmdDir)) {
     fs.mkdirSync(globalCmdDir, { recursive: true });
@@ -215,6 +236,11 @@ if (fs.existsSync(globalPluginDir)) {
   if (fs.existsSync(localAuditCmd)) {
     fs.copyFileSync(localAuditCmd, globalAuditCmd);
     console.log('[COMPILED] Global plugin commands/gluttony-audit.toml');
+  }
+  const localRefactorCmd = path.join(rootDir, 'commands', 'gluttony-refactor.toml');
+  if (fs.existsSync(localRefactorCmd)) {
+    fs.copyFileSync(localRefactorCmd, globalRefactorCmd);
+    console.log('[COMPILED] Global plugin commands/gluttony-refactor.toml');
   }
 
   // Synchronize hooks
@@ -240,7 +266,8 @@ if (fs.existsSync(globalConfigDir)) {
   const allSkills = [
     { name: 'gluttony', content: skillContent },
     { name: 'gluttony-ui', content: uiSkillContent },
-    { name: 'gluttony-audit', content: auditSkillContent }
+    { name: 'gluttony-audit', content: auditSkillContent },
+    { name: 'gluttony-refactor', content: refactorSkillContent }
   ];
   for (const s of allSkills) {
     const sDir = path.join(globalSkillsDir, s.name);
@@ -248,7 +275,7 @@ if (fs.existsSync(globalConfigDir)) {
     fs.writeFileSync(path.join(sDir, 'SKILL.md'), s.content, 'utf8');
   }
 
-  const allCmds = ['gluttony.toml', 'gluttony-ui.toml', 'gluttony-audit.toml'];
+  const allCmds = ['gluttony.toml', 'gluttony-ui.toml', 'gluttony-audit.toml', 'gluttony-refactor.toml'];
   if (!fs.existsSync(globalCommandsDir)) fs.mkdirSync(globalCommandsDir, { recursive: true });
   for (const c of allCmds) {
     const src = path.join(rootDir, 'commands', c);

@@ -5,7 +5,7 @@
 # Gluttony
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](https://github.com/Novazeb/gluttony)
+[![Version](https://img.shields.io/badge/version-2.2.0-green.svg)](https://github.com/Novazeb/gluttony)
 [![Author: Novazeb](https://img.shields.io/badge/author-Novazeb-black.svg)](https://github.com/Novazeb)
 
 <p align="center">
@@ -80,12 +80,12 @@ gluttony/
 ├── .qoder/ & .qoder-plugin/    # Qoder rules & manifest
 ├── .windsurf/rules/            # Windsurf IDE rules
 ├── assets/                     # Icons and visual branding
-├── commands/                   # /gluttony, /gluttony-ui & /gluttony-audit slash commands
+├── commands/                   # /gluttony, /gluttony-ui, /gluttony-audit & /gluttony-refactor slash commands
 ├── docs/                       # Architecture, rules, and migration guides
 ├── examples/                   # Clean code references
 ├── hooks/                      # Terminal statusline indicators
 ├── script/                     # build.js, contrast.js & verify.js
-├── skills/                     # Canonical SKILL.md definitions (gluttony, gluttony-ui & gluttony-audit)
+├── skills/                     # Canonical SKILL.md definitions (gluttony, gluttony-ui, gluttony-audit & gluttony-refactor)
 ├── test/                       # Automated test suite & benchmark runner
 │   └── benchmark/              # Comparative benchmark harness
 ├── .clinerules                 # Cline / Roo-Code rules
@@ -129,6 +129,7 @@ antigravity plugin install https://github.com/Novazeb/gluttony
 * **Core Engineering:** Type `/gluttony [lite|full|strict]` in your agent's chat interface.
 * **UI & Accessibility:** Type `/gluttony-ui` when designing or building frontends, layouts, or verifying WCAG AA contrast.
 * **Passive Bloat Audit:** Type `/gluttony-audit [path]` to scan the codebase or diff for YAGNI violations, dead code, and redundant dependencies without modifying files.
+* **Structured Refactoring:** Type `/gluttony-refactor [path]` to restructure code (extract, inline, rename, move, consolidate) with behavioral contract preservation and verification bracketing.
 * **Direct Instruction:**
   ```
   Use Gluttony mode for this development task.

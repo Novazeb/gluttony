@@ -102,7 +102,21 @@ assert.ok(auditSkillContent.includes('Axis 3: Comment Hygiene & Boilerplate Slop
 const auditCmdPath = path.join(rootDir, 'commands', 'gluttony-audit.toml');
 assert.ok(fs.existsSync(auditCmdPath), 'commands/gluttony-audit.toml must exist');
 
-console.log(`[PASS] Test 1: Canonical gluttony (${requiredRules.length} core rules), gluttony-ui (${requiredUiRules.length} UI rules), and gluttony-audit (3 audit axes) validated`);
+// Validate specialized gluttony-refactor skill
+const refactorSkillPath = path.join(rootDir, 'skills', 'gluttony-refactor', 'SKILL.md');
+assert.ok(fs.existsSync(refactorSkillPath), 'Canonical skills/gluttony-refactor/SKILL.md must exist');
+const refactorSkillContent = fs.readFileSync(refactorSkillPath, 'utf8');
+assert.ok(refactorSkillContent.includes('name: gluttony-refactor'), 'Refactor skill frontmatter name must be gluttony-refactor');
+assert.ok(refactorSkillContent.includes('Behavior-Preserving Only'), 'Refactor skill must enforce Behavior-Preserving Only boundary');
+assert.ok(refactorSkillContent.includes('Phase 1: Investigate'), 'Refactor skill must define Phase 1');
+assert.ok(refactorSkillContent.includes('Phase 2: Baseline'), 'Refactor skill must define Phase 2');
+assert.ok(refactorSkillContent.includes('Phase 3: Transform'), 'Refactor skill must define Phase 3');
+assert.ok(refactorSkillContent.includes('Phase 4: Verify'), 'Refactor skill must define Phase 4');
+
+const refactorCmdPath = path.join(rootDir, 'commands', 'gluttony-refactor.toml');
+assert.ok(fs.existsSync(refactorCmdPath), 'commands/gluttony-refactor.toml must exist');
+
+console.log(`[PASS] Test 1: Canonical gluttony (${requiredRules.length} core rules), gluttony-ui (${requiredUiRules.length} UI rules), gluttony-audit (3 audit axes), and gluttony-refactor (4-phase protocol) validated`);
 
 // --- Test 2: Platform Manifest Validation & Path Integrity ---
 const manifests = [

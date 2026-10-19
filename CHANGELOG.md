@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-10-19
+
+### Added
+- **Structured Refactoring (`gluttony-refactor`):** Dedicated skill for behavior-preserving code restructuring (extract, inline, rename, move, consolidate) with a 4-phase protocol: Investigate → Baseline → Transform → Verify.
+- **Slash Command (`/gluttony-refactor [path]`):** Activates structured refactoring with verification bracketing and blast radius analysis.
+- **Build Pipeline Integration:** `script/build.js` compiles and distributes `gluttony-refactor` across all platform adapters, workspace `.agents/`, and global configurations.
+
 ## [2.1.0] - 2026-10-18
 
 ### Changed

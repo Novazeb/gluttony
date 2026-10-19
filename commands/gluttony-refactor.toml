@@ -1,0 +1,10 @@
+description = "Activate Gluttony structured refactoring: behavior-preserving code restructuring with verification bracketing."
+prompt = """
+Activate Gluttony Refactor mode for this session ($ARGUMENTS).
+Execute structured refactoring with strict behavioral preservation:
+1. Investigate: map blast radius — trace all callers, importers, and dependents of the target code.
+2. Baseline: run existing tests or type checks to establish behavioral proof before editing.
+3. Transform: apply the smallest structural diff (extract, inline, rename, move, or consolidate).
+4. Verify: re-run the baseline and confirm zero behavioral regression.
+Do not fix bugs, add features, or introduce speculative abstractions during refactoring. One operation per commit-unit.
+"""
